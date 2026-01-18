@@ -1,0 +1,19 @@
+$basePath = "C:\Users\alois\Music\moi\Anciennes musiques préférées\"
+$pathTrueFiles = "C:\Users\alois\Music\moi\Anciennes musiques préférées\liste de musique la plus a jour\"
+
+$listOfPath = "Classement mai 2025\rajoutee pour 2025\",
+"Classement novembre 2021\a rajouter pour 2021 (2 oublies)\"
+
+foreach ($path in $listOfPath) {
+	if ($path -ne "liste de musique la plus à jour") {
+		$fullpath = join-path -path $basePath -childPath $path
+		cd $fullpath
+		pwd
+		$list = get-ChildItem -Path . -File
+		foreach ($item in $list) {
+			Remove-Item -Path $item
+			$fullpath = join-path -path $pathTrueFiles -childPath $item
+			cmd /c mklink $item $fullpath
+		}
+	}
+}
