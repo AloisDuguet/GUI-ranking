@@ -1,5 +1,7 @@
 from Helpers import *
 
+# do an IHM so that it is easy to classify? like a list vertically in which I can move the elements
+
 class Music:
     dataFile = "listOfMusic.txt" # file in which musics are saved
 
@@ -11,6 +13,14 @@ class Music:
         self.genres = list() # genre(s) of the music
         self.length = -1 # duration in second
         self.dateAdded = -1 # date at which this music was added to my ranking
+        # add if there are lyrics or not
+        # add other boolean questions to differentiate the music and see if there are characteristics often present in my favourite musics
+        # structure of music I really like? like:
+        # any moment is great (some math rock songs)"
+        # "increasing and preparing a pinnacle moment"
+        # "one specific part incredible (intro can't stop)"
+        # "theme and variation"
+        # "a unique sound (like organ or Zabriskie? or in C)"
     
     def enterMusicCharacteristics(self):
         self.name = input("enter name\n")
