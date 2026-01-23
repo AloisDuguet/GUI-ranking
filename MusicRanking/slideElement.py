@@ -13,9 +13,9 @@ class SlideElement:
         self.frame.rowconfigure(0,weight=1)
         self.frame.rowconfigure(1,weight=1)
 
-        self.position = position
-        self.textVar = tk.StringVar() 
-        self.textVar.set(f"element {self.position}")
+        self.position = tk.IntVar(master, value=position)
+        self.textVar = tk.StringVar()
+        self.textVar.set(f"element {self.position.get()}")
         self.name = ttk.Label(self.frame, textvariable=self.textVar)
         self.name.grid(column=0, row=0)
 
@@ -27,14 +27,17 @@ class SlideElement:
 
     
     def goUp(self):
-        self.position -= 1
-        print(f"goes in position {self.position}")
-        self.textVar.set(f"element {self.position}")
+        self.position.set(self.position.get()-1)
+        print(f"goes in position {self.position.get()}")
+        self.textVar.set(f"element {self.position.get()}")
 
     def goDown(self):
-        self.position += 1
-        print(f"goes in position {self.position}")
-        self.textVar.set(f"element {self.position}")
+        self.position.set(self.position.get()+1)
+        print(f"goes in position {self.position.get()}")
+        self.textVar.set(f"element {self.position.get()}")
+
+    def getPosition(self):
+        return self.position.get()
 
 if __name__ == "__main__":
     root = tk.Tk()
