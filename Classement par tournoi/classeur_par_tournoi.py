@@ -348,7 +348,6 @@ def choose_sort(l):
     if choice == "1":
         l = pivotage(l)
     elif choice == "2":
-        print("multiple group stage not fully implemented")
         nGroupsPrel = int(input("number of groups in preliminary stage?\n"))
         if nGroupsPrel > len(l):
             print("too high value proposed for number of groups in preliminary stage. Set to number of elements to rank.")
