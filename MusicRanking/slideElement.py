@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 class SlideElement:
-    def __init__(self, master, position, callbackUp, callbackDown):
+    def __init__(self, master, name, callbackUp, callbackDown):
         self.frame = ttk.Frame(master, 
                                height=60, 
                                width=200, 
@@ -13,32 +13,16 @@ class SlideElement:
         self.frame.rowconfigure(0,weight=1)
         self.frame.rowconfigure(1,weight=1)
 
-        self.position = tk.IntVar(master, value=position)
-        #self.position.trace_add("write", lambda *args: callback(self)) # outdated
-        self.textVar = tk.StringVar()
-        self.textVar.set(f"element {self.position.get()}")
-        self.name = ttk.Label(self.frame, textvariable=self.textVar)
+        self.name = ttk.Label(self.frame, text=name)
         self.name.grid(column=0, row=0)
 
         self.up = ttk.Button(self.frame, text="places up", command= lambda *args: callbackUp(self))
         self.down = ttk.Button(self.frame, text="places down", command=lambda *args: callbackDown(self))
         self.up.grid(column=1, row=0)
         self.down.grid(column=1, row=1)
-        #self.index? goUp decreases it and goDown decreases it?
 
-    
-    def goUp(self):
-        self.position.set(self.position.get()-1)
-        print(f"goes in position {self.position.get()}")
-        self.textVar.set(f"element {self.position.get()}")
-
-    def goDown(self):
-        self.position.set(self.position.get()+1)
-        print(f"goes in position {self.position.get()}")
-        self.textVar.set(f"element {self.position.get()}")
-
-    def getPosition(self):
-        return self.position.get()
+    def getName(self):
+        return self.name.cget("text")
 
 if __name__ == "__main__":
     root = tk.Tk()
