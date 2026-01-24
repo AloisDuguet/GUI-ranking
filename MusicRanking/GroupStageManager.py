@@ -10,13 +10,14 @@ from GroupWindow import *
 class GroupStageManager:
     def __init__(self, participants, nGroups):
         self.participants = participants
+        self.n = len(self.participants)
         self.nGroups = nGroups
         self.groups = []
         for i in range(nGroups):
             self.groups.append([])
     
     def printParticipants(self, with_ranking=False):
-        for i in range(len(self.participants)):
+        for i in range(self.n):
             if with_ranking:
                 print(f"{i+1}: {self.participants[i]}")
             else:
@@ -33,12 +34,10 @@ class GroupStageManager:
         for el in self.participants:
             self.groups[indexGroup].append(el)
             indexGroup = (indexGroup+1)%self.nGroups
-        print("Groups at the start of group phase:")
+        print("Groups built:")
         self.printGroups()
 
     def makeEqualLevelGroups(self):
-        for i in range(self.nGroups):
-            self.groups.append([])
         indexGroup = 0
         elementPerGroup = int(numpy.floor(self.n / self.nGroups))
         biggerGroups = self.n % self.nGroups # the first few groups are bigger by one
@@ -50,6 +49,9 @@ class GroupStageManager:
             for i in range(elementPerGroup+bonus):
                 self.groups[indexGroup].append(self.participants[cpt])
                 cpt += 1
+        print("Groups built:")
+        self.printGroups()
+        print(f"number of groups in self.groups: {self.groups}")
 
     def printGroup(self, i, with_ranking=False):
         for j in range(len(self.groups[i])):

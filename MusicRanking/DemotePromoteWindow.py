@@ -43,20 +43,24 @@ class DemotePromoteWindow(GroupWindow):
         toStay = []
         for element in self.slideElements:
             if element.toBePromoted:
-                self.toBePromoted.append(element)
+                self.toBePromoted.append(element.getName())
                 print(f"{element.getName()} is promoted")
             elif element.toBeDemoted:
-                self.toBeDemoted.append(element)
+                self.toBeDemoted.append(element.getName())
                 print(f"{element.getName()} is demoted")
             else:
-                toStay.append(element)
+                toStay.append(element.getName())
                 print(f"{element.getName()} stays")
         self.slideElements = toStay
         self.root.quit()
     
     def classify(self):
         self.root.mainloop()
-        return self.toBeDemoted, self.slideElements, self.toBePromoted
+        print(f"toBeDemoted:\n{self.toBeDemoted}")
+        print(f"toStay:\n{self.slideElements}")
+        print(f"toBePromoted:\n{self.toBePromoted}")
+        print(f"end of window.classify:\n{[self.toBeDemoted, self.slideElements, self.toBePromoted]}")
+        return [self.toBeDemoted, self.slideElements, self.toBePromoted]
     
 
 if __name__ == "__main__":
