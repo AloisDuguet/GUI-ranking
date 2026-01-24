@@ -5,9 +5,10 @@ class SeasonStageManager(GroupStageManager):
     def __init__(self, participants, nGroups, nSeasons):
         GroupStageManager.__init__(self, participants, nGroups)
         self.nSeasons = nSeasons
+        self.currentSeason = 0
 
     def classifyGroup(self, i):
-        nameGroup = f"Division {i+1} / {self.nGroups}"
+        nameGroup = f"Season {self.currentSeason} of Season Stage: Division {i+1} / {self.nGroups}"
         window = DemotePromoteWindow(self.groups[i], nameGroup)
         if i == 0:
             # no promotion allowed from best group
@@ -48,6 +49,7 @@ class SeasonStageManager(GroupStageManager):
         self.makeEqualLevelGroups()
         print(f"")
         for indexSeason in range(self.nSeasons):
+            self.currentSeason += 1
             self.manageSeason()
             print(f"Groups at the end of season {indexSeason+1}")
             print(self.groups)
