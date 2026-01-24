@@ -52,6 +52,7 @@ class SeasonStageManager(GroupStageManager):
             print(self.groups)
             self.printGroups()
         self.reorderParticipants()
+        return self.participants
         
 if __name__ == "__main__":
     nameList = ["comme un boomerang", "la marseillaise", "grand pianola music", "wor"]

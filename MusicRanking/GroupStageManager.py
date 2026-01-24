@@ -97,6 +97,7 @@ class GroupStageManager:
         self.makeUnequalLevelGroups()
         self.classifyGroups()
         self.reorderParticipants()
+        return self.participants
         
 
 
