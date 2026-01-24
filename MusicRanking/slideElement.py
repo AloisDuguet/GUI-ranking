@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 class SlideElement:
-    def __init__(self, master, position, callback):
+    def __init__(self, master, position, callbackUp, callbackDown):
         self.frame = ttk.Frame(master, 
                                height=60, 
                                width=200, 
@@ -14,14 +14,14 @@ class SlideElement:
         self.frame.rowconfigure(1,weight=1)
 
         self.position = tk.IntVar(master, value=position)
-        self.position.trace_add("write", lambda *args: callback(self))
+        #self.position.trace_add("write", lambda *args: callback(self)) # outdated
         self.textVar = tk.StringVar()
         self.textVar.set(f"element {self.position.get()}")
         self.name = ttk.Label(self.frame, textvariable=self.textVar)
         self.name.grid(column=0, row=0)
 
-        self.up = ttk.Button(self.frame, text="places up", command=self.goUp)
-        self.down = ttk.Button(self.frame, text="places down", command=self.goDown)
+        self.up = ttk.Button(self.frame, text="places up", command= lambda *args: callbackUp(self))
+        self.down = ttk.Button(self.frame, text="places down", command=lambda *args: callbackDown(self))
         self.up.grid(column=1, row=0)
         self.down.grid(column=1, row=1)
         #self.index? goUp decreases it and goDown decreases it?
