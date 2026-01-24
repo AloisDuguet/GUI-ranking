@@ -8,6 +8,12 @@ class SeasonStageManager(GroupStageManager):
 
     def classifyGroup(self, i):
         window = DemotePromoteWindow(self.groups[i])
+        if i == 0:
+            # no promotion allowed from best group
+            window.noPromotion()
+        elif i == self.nGroups-1:
+            # no demotion allowed from worst group
+            window.noDemotion()
         resSeason = window.classify()
         window.root.destroy()
         print(f"resSeason:\n{resSeason}")

@@ -39,6 +39,16 @@ class DemotePromoteWindow(GroupWindow):
             element.toBeDemoted = False
             element.down.config(style="notPressed.TButton")
 
+    def noPromotion(self):
+        # called by a higher level if it is the best group
+        for element in self.slideElements:
+            element.up.state(["disabled"])
+
+    def noDemotion(self):
+        # called by a higher level if it is the worst group
+        for element in self.slideElements:
+            element.down.state(["disabled"])
+
     def validateRanking(self):
         toStay = []
         for element in self.slideElements:
