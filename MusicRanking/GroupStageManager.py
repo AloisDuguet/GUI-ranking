@@ -25,7 +25,7 @@ class GroupStageManager:
     def printRanking(self):
         self.printParticipants(with_ranking=True)
 
-    def makeGroups(self):
+    def makeUnequalLevelGroups(self):
         # make random groups with approximately
         # the same number of players
         numpy.random.shuffle(self.participants)
@@ -35,6 +35,21 @@ class GroupStageManager:
             indexGroup = (indexGroup+1)%self.nGroups
         print("Groups at the start of group phase:")
         self.printGroups()
+
+    def makeEqualLevelGroups(self):
+        for i in range(self.nGroups):
+            self.groups.append([])
+        indexGroup = 0
+        elementPerGroup = int(numpy.floor(self.n / self.nGroups))
+        biggerGroups = self.n % self.nGroups # the first few groups are bigger by one
+        cpt = 0
+        for indexGroup in range(self.nGroups):
+            bonus = 0
+            if indexGroup < biggerGroups:
+                bonus = 1
+            for i in range(elementPerGroup+bonus):
+                self.groups[indexGroup].append(self.participants[cpt])
+                cpt += 1
 
     def printGroup(self, i, with_ranking=False):
         for j in range(len(self.groups[i])):
@@ -77,7 +92,7 @@ class GroupStageManager:
         self.printRanking()
     
     def manageCompetition(self):
-        self.makeGroups()
+        self.makeUnequalLevelGroups()
         self.classifyGroups()
         self.reorderParticipants()
         
