@@ -19,8 +19,19 @@ class GroupWindow:
         self.slideElements[self.nSlideElements-1].down.state(['disabled'])
         
         # add button validating current ranking
-        self.validRankingButton = ttk.Button(self.root, text="validate ranking", command=self.validateRanking)
+        self.validRankingButton = ttk.Button(self.root, 
+                                             text="validate ranking", 
+                                             command=self.validateRanking)
         self.validRankingButton.grid(column=1,row=0)
+        
+        # change Button style
+        style = ttk.Style()
+        style.theme_use('alt')
+        style.configure('TButton', background = 'grey', foreground = 'white')
+        style.map('TButton', background=[('active','green')])
+
+        # change Label style
+        style.configure('TLabel', width = 40)
     
     def goUp(self, slideElement):
         indexClick = self.slideElements.index(slideElement)

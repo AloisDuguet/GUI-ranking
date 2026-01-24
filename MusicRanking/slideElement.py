@@ -10,11 +10,11 @@ class SlideElement:
                                relief='raised')
         self.frame.columnconfigure(0, weight=1)
         self.frame.columnconfigure(1, weight=1)
-        self.frame.rowconfigure(0,weight=1)
-        self.frame.rowconfigure(1,weight=1)
+        self.frame.rowconfigure(0, weight=1)
+        self.frame.rowconfigure(1, weight=1)
 
-        self.name = ttk.Label(self.frame, text=name)
-        self.name.grid(column=0, row=0)
+        self.name = ttk.Label(self.frame, text=name, justify='center', anchor='center')
+        self.name.grid(column=0, row=0, rowspan=2)
 
         self.up = ttk.Button(self.frame, text="places up", command= lambda *args: callbackUp(self))
         self.down = ttk.Button(self.frame, text="places down", command=lambda *args: callbackDown(self))
