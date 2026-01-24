@@ -7,12 +7,17 @@ class GroupWindow:
     def __init__(self, nameList):
         self.nSlideElements = len(nameList) # number of slideElements
         self.root = tk.Tk()
-        self.root.columnconfigure(0,weight=1)
-        self.root.rowconfigure(self.nSlideElements, weight=1)
+        self.root.columnconfigure(0, weight=5)
+        self.root.columnconfigure(1, weight=1)
         self.slideElements = []
         for i in range(self.nSlideElements):
+            self.root.rowconfigure(i, weight=1)
             self.slideElements.append(SlideElement(self.root, nameList[i], self.goUp, self.goDown))
             self.slideElements[-1].frame.grid(column=0, row=i)
+        
+        # add button validating current ranking
+        self.validRankingButton = ttk.Button(self.root, text="validate ranking", command=self.validateRanking)
+        self.validRankingButton.grid(column=1,row=0)
     
     def goUp(self, slideElement):
         indexClick = self.slideElements.index(slideElement)
@@ -43,6 +48,12 @@ class GroupWindow:
         else:
             print(f"slide element {indexClick} is not allowed to "
                   "go down once")
+    
+    def validateRanking(self):
+        ranking = []
+        for i in range(self.nSlideElements):
+            ranking.append(self.slideElements[i].getName())
+            print(f"{i+1}: {ranking[-1]}")
 
 
 nameList = ["comme un boomerang", "la marseillaise", "grand pianola music"]
