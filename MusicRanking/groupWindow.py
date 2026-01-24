@@ -23,6 +23,9 @@ class GroupWindow:
                                              text="validate ranking", 
                                              command=self.validateRanking)
         self.validRankingButton.grid(column=1,row=0)
+
+        # add attribute for ranking
+        self.ranking = []
         
         # change Button style
         style = ttk.Style()
@@ -80,12 +83,17 @@ class GroupWindow:
                   "go down once")
     
     def validateRanking(self):
-        ranking = []
         for i in range(self.nSlideElements):
-            ranking.append(self.slideElements[i].getName())
-            print(f"{i+1}: {ranking[-1]}")
+            self.ranking.append(self.slideElements[i].getName())
+            print(f"{i+1}: {self.ranking[-1]}")
+        self.root.quit()
+
+    def classify(self):
+        self.root.mainloop()
+        return self.ranking
 
 
-nameList = ["comme un boomerang", "la marseillaise", "grand pianola music"]
-window = GroupWindow(nameList)
-window.root.mainloop()
+if __name__ == "__main__":
+    nameList = ["comme un boomerang", "la marseillaise", "grand pianola music"]
+    window = GroupWindow(nameList)
+    window.root.mainloop()
