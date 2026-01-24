@@ -51,7 +51,6 @@ class GroupStageManager:
                 cpt += 1
         print("Groups built:")
         self.printGroups()
-        print(f"number of groups in self.groups: {self.groups}")
 
     def printGroup(self, i, with_ranking=False):
         for j in range(len(self.groups[i])):

@@ -21,7 +21,6 @@ class DemotePromoteWindow(GroupWindow):
         if element.toBePromoted == False:
             element.toBePromoted = True
             element.toBeDemoted = False
-            print(f"{element.getName()} will be promoted")
             element.up.config(style="Promoted.TButton")
             element.down.config(style="notPressed.TButton")
         else:
@@ -32,7 +31,6 @@ class DemotePromoteWindow(GroupWindow):
         if element.toBeDemoted == False:
             element.toBePromoted = False
             element.toBeDemoted = True
-            print(f"{element.getName()} will be demoted")
             element.down.config(style="Demoted.TButton")
             element.up.config(style="notPressed.TButton")
         else:
@@ -54,22 +52,15 @@ class DemotePromoteWindow(GroupWindow):
         for element in self.slideElements:
             if element.toBePromoted:
                 self.toBePromoted.append(element.getName())
-                print(f"{element.getName()} is promoted")
             elif element.toBeDemoted:
                 self.toBeDemoted.append(element.getName())
-                print(f"{element.getName()} is demoted")
             else:
                 toStay.append(element.getName())
-                print(f"{element.getName()} stays")
         self.slideElements = toStay
         self.root.quit()
     
     def classify(self):
         self.root.mainloop()
-        print(f"toBeDemoted:\n{self.toBeDemoted}")
-        print(f"toStay:\n{self.slideElements}")
-        print(f"toBePromoted:\n{self.toBePromoted}")
-        print(f"end of window.classify:\n{[self.toBeDemoted, self.slideElements, self.toBePromoted]}")
         return [self.toBeDemoted, self.slideElements, self.toBePromoted]
     
 

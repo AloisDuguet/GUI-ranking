@@ -18,7 +18,6 @@ class SeasonStageManager(GroupStageManager):
             window.noDemotion()
         resSeason = window.classify()
         window.root.destroy()
-        print(f"resSeason:\n{resSeason}")
         return resSeason
 
     def manageSeason(self):
