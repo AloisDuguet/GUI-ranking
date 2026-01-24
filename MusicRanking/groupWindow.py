@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-from slideElement import *
+from SlideElement import *
 
 class GroupWindow:
     def __init__(self, nameList):
