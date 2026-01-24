@@ -7,7 +7,8 @@ class SeasonStageManager(GroupStageManager):
         self.nSeasons = nSeasons
 
     def classifyGroup(self, i):
-        window = DemotePromoteWindow(self.groups[i])
+        nameGroup = f"Division {i+1} / {self.nGroups}"
+        window = DemotePromoteWindow(self.groups[i], nameGroup)
         if i == 0:
             # no promotion allowed from best group
             window.noPromotion()

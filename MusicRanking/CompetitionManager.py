@@ -32,6 +32,10 @@ class CompetitionManager:
         GroupStageManager.printParticipants(self, with_ranking=True)
 
 if __name__ == "__main__":
-    nameList = ["Naruto", "Full Metal Alchemist", "Frieren", "One Punch Man", "Devilman: crybaby", "Hunter x Hunter"]
-    manager = CompetitionManager(nameList)
+    nameList = ["Naruto", "Full Metal Alchemist", 
+                "Frieren", "One Punch Man", 
+                "Devilman: crybaby", "Hunter x Hunter",
+                "Dragon Ball", "Jujutsu Kaisen",
+                "L'Attaque des Titans", "Bleach"]
+    manager = CompetitionManager(nameList, True, True, 3, 3, 2)
     manager.manageCompetition()

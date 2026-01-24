@@ -2,8 +2,8 @@ from GroupWindow import *
 from DemotePromoteElement import *
 
 class DemotePromoteWindow(GroupWindow):
-    def __init__(self, nameList):
-        GroupWindow.init(self, nameList, DemotePromoteElement, self.promote, self.demote)
+    def __init__(self, nameList, nameGroup):
+        GroupWindow.init(self, nameList, nameGroup, DemotePromoteElement, self.promote, self.demote)
         self.slideElements[0].up.state(['!disabled'])
         self.slideElements[self.nSlideElements-1].down.state(['!disabled'])
         self.toBePromoted = []

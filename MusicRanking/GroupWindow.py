@@ -4,12 +4,13 @@ from tkinter import ttk
 from SlideElement import *
 
 class GroupWindow:
-    def __init__(self, nameList):
-        self.init(nameList, SlideElement, self.goUp, self.goDown)
+    def __init__(self, nameList, nameWindow):
+        self.init(nameList, nameWindow, SlideElement, self.goUp, self.goDown)
 
-    def init(self, nameList, Element, callbackButtonUp, callbackButtonDown):
+    def init(self, nameList, nameWindow, Element, callbackButtonUp, callbackButtonDown):
         self.nSlideElements = len(nameList) # number of slideElements
         self.root = tk.Tk()
+        self.root.title(nameWindow)
         self.root.columnconfigure(0, weight=5)
         self.root.columnconfigure(1, weight=1)
         self.slideElements = []
