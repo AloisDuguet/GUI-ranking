@@ -5,6 +5,9 @@ from SlideElement import *
 
 class GroupWindow:
     def __init__(self, nameList):
+        self.init(nameList, SlideElement, self.goUp, self.goDown)
+
+    def init(self, nameList, Element, callbackButtonUp, callbackButtonDown):
         self.nSlideElements = len(nameList) # number of slideElements
         self.root = tk.Tk()
         self.root.columnconfigure(0, weight=5)
@@ -12,7 +15,7 @@ class GroupWindow:
         self.slideElements = []
         for i in range(self.nSlideElements):
             self.root.rowconfigure(i, weight=1)
-            self.slideElements.append(SlideElement(self.root, nameList[i], self.goUp, self.goDown))
+            self.slideElements.append(Element(self.root, nameList[i], callbackButtonUp, callbackButtonDown))
             self.slideElements[-1].frame.grid(column=0, row=i)
         # disable interdicted buttons
         self.slideElements[0].up.state(['disabled'])

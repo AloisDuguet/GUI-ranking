@@ -5,6 +5,8 @@ class DemotePromoteElement(SlideElement):
         SlideElement.__init__(self, master, name, callbackPromote, callbackDemote)
         self.up["text"] = "promote"
         self.down["text"] = "demote"
+        self.toBePromoted = False
+        self.toBeDemoted = False
 
 if __name__ == "__main__":
     root = tk.Tk()
