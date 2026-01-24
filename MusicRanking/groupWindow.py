@@ -14,6 +14,9 @@ class GroupWindow:
             self.root.rowconfigure(i, weight=1)
             self.slideElements.append(SlideElement(self.root, nameList[i], self.goUp, self.goDown))
             self.slideElements[-1].frame.grid(column=0, row=i)
+        # disable interdicted buttons
+        self.slideElements[0].up.state(['disabled'])
+        self.slideElements[self.nSlideElements-1].down.state(['disabled'])
         
         # add button validating current ranking
         self.validRankingButton = ttk.Button(self.root, text="validate ranking", command=self.validateRanking)
@@ -30,6 +33,14 @@ class GroupWindow:
             self.slideElements[indexClick-1].frame.grid(column=0, row=indexClick)
             # exchange place of the two slide elements in the list
             self.slideElements[indexClick], self.slideElements[indexClick-1] = self.slideElements[indexClick-1], self.slideElements[indexClick]
+            if indexClick == 1: 
+                # disable new button up of element 0 and enable the one of element 1
+                self.slideElements[0].up.state(['disabled'])
+                self.slideElements[1].up.state(['!disabled'])
+            if indexClick == self.nSlideElements-1:
+                # disable new button down of last element and enable the one of other element
+                self.slideElements[self.nSlideElements-1].down.state(['disabled'])
+                self.slideElements[self.nSlideElements-2].down.state(['!disabled'])
         else:
             print(f"slide element {indexClick} is not allowed to "
                   "go up once")
@@ -45,6 +56,14 @@ class GroupWindow:
             self.slideElements[indexClick+1].frame.grid(column=0, row=indexClick)
             # exchange place of the two slide elements in the list
             self.slideElements[indexClick], self.slideElements[indexClick+1] = self.slideElements[indexClick+1], self.slideElements[indexClick]
+            if indexClick == 0: 
+                # disable new button up of element 0 and enable the one of element 1
+                self.slideElements[0].up.state(['disabled'])
+                self.slideElements[1].up.state(['!disabled'])
+            if indexClick == self.nSlideElements-2:
+                # disable new button down of last element and enable the one of other element
+                self.slideElements[self.nSlideElements-1].down.state(['disabled'])
+                self.slideElements[self.nSlideElements-2].down.state(['!disabled'])
         else:
             print(f"slide element {indexClick} is not allowed to "
                   "go down once")
