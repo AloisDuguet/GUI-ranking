@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 class SlideElement:
-    def __init__(self, master, position):
+    def __init__(self, master, position, callback):
         self.frame = ttk.Frame(master, 
                                height=60, 
                                width=200, 
@@ -14,6 +14,7 @@ class SlideElement:
         self.frame.rowconfigure(1,weight=1)
 
         self.position = tk.IntVar(master, value=position)
+        self.position.trace_add("write", lambda *args: callback(self))
         self.textVar = tk.StringVar()
         self.textVar.set(f"element {self.position.get()}")
         self.name = ttk.Label(self.frame, textvariable=self.textVar)

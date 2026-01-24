@@ -11,23 +11,28 @@ class GroupWindow:
         self.root.rowconfigure(n, weight=1)
         self.slideElements = []
         for i in range(n):
-            self.slideElements.append(SlideElement(self.root, i))
+            self.slideElements.append(SlideElement(self.root, i, self.switchPlace))
             self.slideElements[-1].frame.grid(column=0, row=i)
-            self.slideElements[-1].position.trace_add('write', self.switchPlace)
+        #print(self.slideElements[-1].configure().keys())
 
-    def switchPlace(self, varName, index, mode):
-        positionClick = varName.get() # does not work, it is just a name (string?) 
+    def switchPlace(self, slideElement):
+        indexClick = self.slideElements.index(slideElement)
+        print(f"index of slide element with position modified: {indexClick}")
         # I want to access the position but I don't know how
-        indexElementAbove = self.getElementAbove(positionClick)
-        self.slideElements[positionClick].frame.grid(column=0, row = positionClick-1)
-        self.slideElements[indexElementAbove].frame.grid(column=0, row = positionClick)
+        newPositionClick = self.slideElements[indexClick].getPosition()
+        if newPositionClick >= 0 and newPositionClick < len(self.slideElements):
+            print(f"slide element {indexClick} is allowed to "
+                  f"exchange with slide element {newPositionClick}")
+        #self.slideElements[positionClick].frame.grid(column=0, row = positionClick-1)
+        #self.slideElements[indexElementAbove].frame.grid(column=0, row = positionClick)
 
-    def getElementAbove(self, position):
+    def getElementToExchange(self, position):
         for i in range(n):
             pos = self.slideElements[i].getPosition()
-            if pos == position-1:
+            if pos == position:
                 return pos
-        print("top element cannot go up again")
+        print(f"element cannot move to position {position}, " 
+              "it is out of the valid positions. Put his value to the old one.")
 
 window = GroupWindow(3)
 window.root.mainloop()
