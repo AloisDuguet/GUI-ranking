@@ -16,8 +16,8 @@ class SlideElement:
         self.name = ttk.Label(self.frame, text=name, justify='center', anchor='center')
         self.name.grid(column=0, row=0, rowspan=2)
 
-        self.up = ttk.Button(self.frame, text="places up", command= lambda *args: callbackUp(self))
-        self.down = ttk.Button(self.frame, text="places down", command=lambda *args: callbackDown(self))
+        self.up = ttk.Button(self.frame, text="go up", command= lambda *args: callbackUp(self))
+        self.down = ttk.Button(self.frame, text="go down", command=lambda *args: callbackDown(self))
         self.up.grid(column=1, row=0)
         self.down.grid(column=1, row=1)
 
