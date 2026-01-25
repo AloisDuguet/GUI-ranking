@@ -1,3 +1,7 @@
+import tkinter as tk
+from tkinter import ttk
+import os
+
 def makeStringFromList(l):
     # concatenate elements with '-' between two elements
     s = ""
@@ -17,3 +21,30 @@ def getUniqueSuccessorID(dataFile):
         countMusic = sum((line.count(pattern) >= 1) for line in file)
     print("number of Music ID: ", countMusic+1)
     return countMusic+1
+
+def getListFromFolder(key=".jpg"):
+    # returns a list with all elements of folder
+    folder = inputPath("Enter path to folder with list to build")
+    list = os.listdir(folder)
+    filteredList = []
+    for el in list:
+        if key not in el:
+            filteredList.append(el)
+    return filteredList
+
+def inputPath(message):
+    root = tk.Tk()
+    label = ttk.Label(root, text=message)
+    label.pack()
+    message2 = f"Current directory: {os.getcwd()}"
+    label2 = ttk.Label(root, text=message2)
+    label2.pack()
+    entry = ttk.Entry(root)
+    entry.pack()
+    entry.focus()
+    button = ttk.Button(root, text="confirm", command=root.quit)
+    button.pack()
+    root.mainloop()
+    filename = entry.get()
+    root.destroy()
+    return filename
