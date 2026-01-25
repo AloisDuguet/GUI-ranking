@@ -35,7 +35,7 @@ class GroupWindow:
         style = ttk.Style()
         style.theme_use('alt')
         style.configure('TButton', background = 'grey', foreground = 'white')
-        style.map('TButton', background=[('active','green')])
+        style.map('TButton', background=[('active','blue')])
 
         # change Label style
         style.configure('TLabel', width = 40)
