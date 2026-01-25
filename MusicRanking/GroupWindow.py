@@ -12,8 +12,7 @@ class GroupWindow:
         self.ranking = []
         self.root = tk.Tk()
         self.root.title(nameWindow)
-        self.root.columnconfigure(0, weight=5)
-        self.root.columnconfigure(1, weight=1)
+        self.elementPerColumn = 10
         self.slideElements = []
         for i in range(self.nSlideElements):
             self.slideElements.append(Element(self.root, nameList[i], callbackButtonUp, callbackButtonDown))
@@ -26,10 +25,31 @@ class GroupWindow:
         self.widgetStyles()
     
     def initElementsOnWindow(self, Element, callbackButtonUp, callbackButtonDown):
-        for i in range(self.nSlideElements):
-            self.root.rowconfigure(i, weight=1)
-            self.slideElements[i].frame.grid(column=0, row=i)
-        self.validRankingButton.grid(column=1,row=0)
+        if self.nSlideElements <= self.elementPerColumn:
+            self.root.columnconfigure(0, weight=5)
+            self.root.columnconfigure(1, weight=1)
+            for i in range(self.nSlideElements):
+                self.root.rowconfigure(i, weight=1)
+                self.slideElements[i].frame.grid(column=0, row=i)
+            self.validRankingButton.grid(column=1,row=0)
+        else:
+            self.nColumnWithElements = int(self.nSlideElements/self.elementPerColumn)
+            # build columns
+            for i in range(self.nColumnWithElements):
+                print(f"making column {i}")
+                self.root.columnconfigure(i, weight=5)
+            self.root.columnconfigure(self.nColumnWithElements, weight=1)
+            # build rows
+            for i in range(self.elementPerColumn):
+                print(f"making row {i}")
+                self.root.rowconfigure(i, weight=1)
+            # assign Elements to grid
+            for indexColumn in range(self.nColumnWithElements):
+                for indexRow in range(self.elementPerColumn):
+                    indexElement = self.elementPerColumn*indexColumn+indexRow
+                    if indexElement < self.nSlideElements:
+                        self.slideElements[indexElement].frame.grid(column=indexColumn, row=indexRow)
+            self.validRankingButton.grid(column=self.nColumnWithElements,row=0)
 
     def disableButtons(self):
         # disable interdicted buttons

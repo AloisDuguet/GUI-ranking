@@ -77,8 +77,8 @@ if __name__ == "__main__":
                 "Alice in Wonderland", "Solo Leveling",
                 "My Hero Academia", "Detective Conan",
                 "Vinland Saga", "Golden Kamui"]
-    nameList = ["Naruto", "Full Metal Alchemist", 
-                "Frieren", "One Punch Man"]
+    #nameList = ["Naruto", "Full Metal Alchemist", 
+    #            "Frieren", "One Punch Man"]
     manager = CompetitionManager(nameList, True, True, True, 2, 2, 1)
     manager.manageCompetition()
     # TODO: method to write ranking in a file
