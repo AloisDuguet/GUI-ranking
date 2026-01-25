@@ -81,4 +81,3 @@ if __name__ == "__main__":
     #            "Frieren", "One Punch Man"]
     manager = CompetitionManager(nameList, True, True, True, 2, 2, 1)
     manager.manageCompetition()
-    # TODO: method to write ranking in a file
