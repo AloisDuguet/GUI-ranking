@@ -12,7 +12,7 @@ class GroupWindow:
         self.ranking = []
         self.root = tk.Tk()
         self.root.title(nameWindow)
-        self.elementPerColumn = 10
+        self.elementPerColumn = 12
         self.slideElements = []
         for i in range(self.nSlideElements):
             self.slideElements.append(Element(self.root, nameList[i], callbackButtonUp, callbackButtonDown))
