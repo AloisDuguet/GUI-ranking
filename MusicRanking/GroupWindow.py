@@ -72,34 +72,47 @@ class GroupWindow:
     
     def goUp(self, slideElement):
         indexClick = self.slideElements.index(slideElement)
+        print(f"element {indexClick} should move up once")
         # exchange place of the two slide elements on the window
-        self.slideElements[indexClick].frame.grid(column=0, row=indexClick-1)
-        self.slideElements[indexClick-1].frame.grid(column=0, row=indexClick)
+        col,row = self.getGridPosition(indexClick-1)
+        print(f"new position of element {indexClick}: col {col}, row {row}")
+        self.slideElements[indexClick].frame.grid(column=col, row=row)
+        col,row = self.getGridPosition(indexClick)
+        print(f"new position of element {indexClick-1}: col {col}, row {row}")
+        self.slideElements[indexClick-1].frame.grid(column=col, row=row)
         # exchange place of the two slide elements in the list
         self.slideElements[indexClick], self.slideElements[indexClick-1] = self.slideElements[indexClick-1], self.slideElements[indexClick]
-        if indexClick == 1: 
+        if indexClick == 1:
             # disable new button up of element 0 and enable the one of element 1
+            print(f"in goUp, button up disabled")
             self.slideElements[0].up.state(['disabled'])
             self.slideElements[1].up.state(['!disabled'])
         if indexClick == self.nSlideElements-1:
             # disable new button down of last element and enable the one of other element
+            print(f"in goUp, button down disabled")
             self.slideElements[self.nSlideElements-1].down.state(['disabled'])
             self.slideElements[self.nSlideElements-2].down.state(['!disabled'])
-
         
     def goDown(self, slideElement):
         indexClick = self.slideElements.index(slideElement)
+        print(f"element {indexClick} should move down once")
         # exchange place of the two slide elements on the window
-        self.slideElements[indexClick].frame.grid(column=0, row=indexClick+1)
-        self.slideElements[indexClick+1].frame.grid(column=0, row=indexClick)
+        col,row = self.getGridPosition(indexClick+1)
+        print(f"new position of element {indexClick}: col {col}, row {row}")
+        self.slideElements[indexClick].frame.grid(column=col, row=row)
+        col,row = self.getGridPosition(indexClick)
+        print(f"new position of element {indexClick+1}: col {col}, row {row}")
+        self.slideElements[indexClick+1].frame.grid(column=col, row=row)
         # exchange place of the two slide elements in the list
         self.slideElements[indexClick], self.slideElements[indexClick+1] = self.slideElements[indexClick+1], self.slideElements[indexClick]
         if indexClick == 0: 
             # disable new button up of element 0 and enable the one of element 1
+            print(f"in goDown, button up disabled")
             self.slideElements[0].up.state(['disabled'])
             self.slideElements[1].up.state(['!disabled'])
         if indexClick == self.nSlideElements-2:
             # disable new button down of last element and enable the one of other element
+            print(f"in goDown, button down disabled")
             self.slideElements[self.nSlideElements-1].down.state(['disabled'])
             self.slideElements[self.nSlideElements-2].down.state(['!disabled'])
         
