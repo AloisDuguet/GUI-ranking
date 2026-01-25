@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+import math
 
 from SlideElement import *
 
@@ -33,7 +34,7 @@ class GroupWindow:
                 self.slideElements[i].frame.grid(column=0, row=i)
             self.validRankingButton.grid(column=1,row=0)
         else:
-            self.nColumnWithElements = int(self.nSlideElements/self.elementPerColumn)
+            self.nColumnWithElements = int(math.ceil(self.nSlideElements/self.elementPerColumn))
             # build columns
             for i in range(self.nColumnWithElements):
                 print(f"making column {i}")

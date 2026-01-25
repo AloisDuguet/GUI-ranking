@@ -22,7 +22,7 @@ class CompetitionManager:
         self.nGroupSeasonStage = nGroupSeasonStage
         self.nSeasons = nSeasons
 
-    def validateEntry(self):
+    def confirmPressed(self):
         self.root.quit()
 
     def getFilename(self):
@@ -36,7 +36,7 @@ class CompetitionManager:
         entry = ttk.Entry(self.root)
         entry.pack()
         entry.focus()
-        button = ttk.Button(self.root, text="confirm", command=self.validateEntry)
+        button = ttk.Button(self.root, text="confirm", command=self.confirmPressed)
         button.pack()
         self.root.mainloop()
         self.filename = entry.get()
@@ -79,5 +79,7 @@ if __name__ == "__main__":
                 "Vinland Saga", "Golden Kamui"]
     #nameList = ["Naruto", "Full Metal Alchemist", 
     #            "Frieren", "One Punch Man"]
-    manager = CompetitionManager(nameList, True, True, True, 2, 2, 1)
+    manager = CompetitionManager(nameList, False, False, True, 4, 4, 2)
+    # TODO: create function returning a list with all files in a folder to automatically get the proper participants' list
     manager.manageCompetition()
+    # TODO: only one window is open the whole execution, instead of having a window per group

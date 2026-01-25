@@ -1,0 +1,20 @@
+1: Naruto
+2: Full Metal Alchemist
+3: Frieren
+4: One Punch Man
+5: Devilman: crybaby
+6: Hunter x Hunter
+7: Dragon Ball
+8: Jujutsu Kaisen
+9: L'Attaque des Titans
+10: Bleach
+11: SaikiK
+12: One Piece
+13: Uncle from Another World
+14: Mob Psycho 100
+15: Alice in Wonderland
+16: Solo Leveling
+17: My Hero Academia
+18: Detective Conan
+19: Vinland Saga
+20: Golden Kamui
