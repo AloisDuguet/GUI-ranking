@@ -9,34 +9,39 @@ class GroupWindow:
 
     def init(self, nameList, nameWindow, Element, callbackButtonUp, callbackButtonDown):
         self.nSlideElements = len(nameList) # number of slideElements
+        self.ranking = []
         self.root = tk.Tk()
         self.root.title(nameWindow)
         self.root.columnconfigure(0, weight=5)
         self.root.columnconfigure(1, weight=1)
         self.slideElements = []
         for i in range(self.nSlideElements):
-            self.root.rowconfigure(i, weight=1)
             self.slideElements.append(Element(self.root, nameList[i], callbackButtonUp, callbackButtonDown))
-            self.slideElements[-1].frame.grid(column=0, row=i)
-        # disable interdicted buttons
-        self.slideElements[0].up.state(['disabled'])
-        self.slideElements[self.nSlideElements-1].down.state(['disabled'])
-        
         # add button validating current ranking
         self.validRankingButton = ttk.Button(self.root, 
                                              text="validate ranking", 
                                              command=self.validateRanking)
+        self.initElementsOnWindow(Element, callbackButtonUp, callbackButtonDown)
+        self.disableButtons()
+        self.widgetStyles()
+    
+    def initElementsOnWindow(self, Element, callbackButtonUp, callbackButtonDown):
+        for i in range(self.nSlideElements):
+            self.root.rowconfigure(i, weight=1)
+            self.slideElements[i].frame.grid(column=0, row=i)
         self.validRankingButton.grid(column=1,row=0)
 
-        # add attribute for ranking
-        self.ranking = []
+    def disableButtons(self):
+        # disable interdicted buttons
+        self.slideElements[0].up.state(['disabled'])
+        self.slideElements[self.nSlideElements-1].down.state(['disabled'])
         
+    def widgetStyles(self):
         # change Button style
         style = ttk.Style()
         style.theme_use('alt')
         style.configure('TButton', background = 'grey', foreground = 'white')
         style.map('TButton', background=[('active','blue')])
-
         # change Label style
         style.configure('TLabel', width = 40)
     

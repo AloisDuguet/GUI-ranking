@@ -4,11 +4,11 @@ from DemotePromoteElement import *
 class DemotePromoteWindow(GroupWindow):
     def __init__(self, nameList, nameGroup):
         GroupWindow.init(self, nameList, nameGroup, DemotePromoteElement, self.promote, self.demote)
-        self.slideElements[0].up.state(['!disabled'])
-        self.slideElements[self.nSlideElements-1].down.state(['!disabled'])
         self.toBePromoted = []
         self.toBeDemoted = []
 
+    def widgetStyles(self):
+        GroupWindow.widgetStyles(self)
         # define styles depending on whose option is selected
         style = ttk.Style()
         style.configure("Promoted.TButton", background="green")
@@ -16,6 +16,12 @@ class DemotePromoteWindow(GroupWindow):
         style2.configure("Demoted.TButton", background="red")
         style3 = ttk.Style()
         style3.configure("notPressed.TButton")
+
+    def disableButtons(self):
+        # no buttons to disable at initialization
+        # this class does not know the division of the group
+        # noPromote() and noDemote() are called from above
+        pass
     
     def promote(self, element):
         if element.toBePromoted == False:
