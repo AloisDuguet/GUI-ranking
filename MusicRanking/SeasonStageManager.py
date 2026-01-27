@@ -13,7 +13,7 @@ class SeasonStageManager(GroupStageManager):
         if i == 0:
             # no promotion allowed from best group
             window.noPromotion()
-        elif i == self.nGroups-1:
+        if i == self.nGroups-1:
             # no demotion allowed from worst group
             window.noDemotion()
         resSeason = window.classify()
@@ -28,14 +28,15 @@ class SeasonStageManager(GroupStageManager):
         # resSeason[i][j]: group i, 
         # j=0 demotion; j=1 stay; j=2 promotion
         # best group first
-        self.groups[0] = resSeason[0][1]
-        self.groups[0].extend(resSeason[1][2])
-        for i in range(1,self.nGroups-1):
-            self.groups[i] = resSeason[i-1][0]
-            self.groups[i].extend(resSeason[i][1])
-            self.groups[i].extend(resSeason[i+1][2])
-        self.groups[self.nGroups-1] = resSeason[self.nGroups-2][0]
-        self.groups[self.nGroups-1].extend(resSeason[self.nGroups-1][1])
+        if self.nGroups > 1: # no changes if only one group
+            self.groups[0] = resSeason[0][1]
+            self.groups[0].extend(resSeason[1][2])
+            for i in range(1,self.nGroups-1):
+                self.groups[i] = resSeason[i-1][0]
+                self.groups[i].extend(resSeason[i][1])
+                self.groups[i].extend(resSeason[i+1][2])
+            self.groups[self.nGroups-1] = resSeason[self.nGroups-2][0]
+            self.groups[self.nGroups-1].extend(resSeason[self.nGroups-1][1])
 
     def reorderParticipants(self):
         # reorder them from first group to last group
