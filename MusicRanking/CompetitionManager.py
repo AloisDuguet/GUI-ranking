@@ -27,6 +27,11 @@ class CompetitionManager:
 
     def chooseCompetitionSetup(self):
         self.root = tk.Tk()
+        
+        self.styleButtonPressed = ttk.Style()
+        self.styleButtonPressed.theme_use('alt')
+        self.styleButtonPressed.configure("Pressed.TButton", background='green')
+
         self.frame = ttk.Frame(self.root, 
                                height=300,
                                width=480,
@@ -114,18 +119,15 @@ class CompetitionManager:
     def confirmStage(self, button):
         # define style for button pressed
         buttonNumber = self.buttons.index(button)
-        self.styleButtonPressed = ttk.Style()
-        self.styleButtonPressed.configure("Pressed.TButton", background="green")
-        print(f"button number {buttonNumber} pressed")
         if buttonNumber == 0:
             self.doGroupStage = True
             self.buttons[0].config(style="Pressed.TButton")
         if buttonNumber == 1:
             self.doSeasonStage = True
-            #self.buttons[1].config(style="Pressed.TButton")
+            self.buttons[1].config(style="Pressed.TButton")
         if buttonNumber == 2:
             self.doFinalGroupStage = True
-            #self.buttons[2].config(style="Pressed.TButton")
+            self.buttons[2].config(style="Pressed.TButton")
 
         
 
