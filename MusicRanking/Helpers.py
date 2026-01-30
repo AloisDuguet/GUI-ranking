@@ -33,7 +33,9 @@ def getListFromFolder(key=".jpg"):
     return filteredList
 
 def inputPath(message, root):
-    frame = ttk.Frame(root)
+    frame = ttk.Frame(root,
+                      relief='raised')
+    root.title("Saving")
     frame.pack()
     label = ttk.Label(frame, text=message)
     label.pack()

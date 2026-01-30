@@ -37,6 +37,7 @@ class CompetitionManager:
                                height=900,
                                width=1440,
                                relief='raised')
+        self.root.title("Setup of Competition")
         # column 0 for label proposing a specific stage
         self.frame.columnconfigure(0, weight=3)
         # column 1 for button to accept the stage 
