@@ -2,8 +2,8 @@ from GroupWindow import *
 from DemotePromoteElement import *
 
 class DemotePromoteWindow(GroupWindow):
-    def __init__(self, nameList, nameGroup):
-        GroupWindow.init(self, nameList, nameGroup, DemotePromoteElement, self.promote, self.demote)
+    def __init__(self, root, nameList, nameGroup):
+        GroupWindow.init(self, root, nameList, nameGroup, DemotePromoteElement, self.promote, self.demote)
         self.toBePromoted = []
         self.toBeDemoted = []
 
@@ -71,6 +71,7 @@ class DemotePromoteWindow(GroupWindow):
     
 
 if __name__ == "__main__":
+    # outdated
     nameList = ["comme un boomerang", "la marseillaise", "grand pianola music"]
     window = DemotePromoteWindow(nameList)
     window.root.mainloop()

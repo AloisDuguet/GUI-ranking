@@ -143,7 +143,8 @@ class CompetitionManager:
                                         self.nGroupGroupStage)
             self.participants = manager.manageCompetition()
         if self.doSeasonStage:
-            manager = SeasonStageManager(self.participants, 
+            manager = SeasonStageManager(self.root,
+                                         self.participants, 
                                          self.nGroupSeasonStage, 
                                          self.nSeasons)
             self.participants = manager.manageCompetition()

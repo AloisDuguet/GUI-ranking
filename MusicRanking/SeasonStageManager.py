@@ -2,14 +2,14 @@ from GroupStageManager import *
 from DemotePromoteWindow import *
 
 class SeasonStageManager(GroupStageManager):
-    def __init__(self, participants, nGroups, nSeasons):
-        GroupStageManager.__init__(self, participants, nGroups)
+    def __init__(self, root, participants, nGroups, nSeasons):
+        GroupStageManager.__init__(self, root, participants, nGroups)
         self.nSeasons = nSeasons
         self.currentSeason = 0
 
     def classifyGroup(self, i):
         nameGroup = f"Season {self.currentSeason} of Season Stage: Division {i+1} / {self.nGroups}"
-        window = DemotePromoteWindow(self.groups[i], nameGroup)
+        window = DemotePromoteWindow(self.root, self.groups[i], nameGroup)
         if i == 0:
             # no promotion allowed from best group
             window.noPromotion()
@@ -17,7 +17,7 @@ class SeasonStageManager(GroupStageManager):
             # no demotion allowed from worst group
             window.noDemotion()
         resSeason = window.classify()
-        window.root.destroy()
+        window.frame.destroy()
         return resSeason
 
     def manageSeason(self):
