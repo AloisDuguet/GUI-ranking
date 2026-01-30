@@ -12,8 +12,6 @@ class GroupWindow:
         self.root = root
         self.root.title(nameWindow)
         self.frame = ttk.Frame(self.root,
-                               height=900,
-                               width=1440,
                                relief='raised')
         self.frame.pack()
         self.nSlideElements = len(nameList) # number of slideElements

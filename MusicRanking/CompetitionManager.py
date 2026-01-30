@@ -33,10 +33,24 @@ class CompetitionManager:
         self.styleButtonPressed.theme_use('alt')
         self.styleButtonPressed.configure("Pressed.TButton", background='green')
 
-        self.frame = ttk.Frame(self.root, 
-                               height=900,
-                               width=1440,
+        self.frame = ttk.Frame(self.root,
                                relief='raised')
+        
+        # fix the size and position of the window in the middle of the screen
+        window_width = 1000
+        window_height = 600
+        
+        # get the screen dimension
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
+
+        # find the center point
+        center_x = int(screen_width/2 - window_width / 2)
+        center_y = int(screen_height/2 - window_height / 2)
+
+        # set the position of the window to the center of the screen
+        self.root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
+
         self.root.title("Setup of Competition")
         # column 0 for label proposing a specific stage
         self.frame.columnconfigure(0, weight=3)
