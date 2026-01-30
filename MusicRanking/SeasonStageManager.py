@@ -1,6 +1,10 @@
 from GroupStageManager import *
 from DemotePromoteWindow import *
 
+# TODO: display at the same time as the current group being organized 
+# for promotion and demotion the groups in which the elements 
+# can be promoted to the left and demoted to the right
+
 class SeasonStageManager(GroupStageManager):
     def __init__(self, root, participants, nGroups, nSeasons):
         GroupStageManager.__init__(self, root, participants, nGroups)
