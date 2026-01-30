@@ -150,7 +150,8 @@ class CompetitionManager:
             self.participants = manager.manageCompetition()
         if self.doFinalGroupStage:
             # one group to sort everything
-            manager = FinalGroupStageManager(self.participants)
+            manager = FinalGroupStageManager(self.root,
+                                             self.participants)
             self.participants = manager.manageCompetition()
         print("Final ranking of the competition:")
         GroupStageManager.printParticipants(self, with_ranking=True)
