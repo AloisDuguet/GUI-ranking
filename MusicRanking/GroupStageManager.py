@@ -8,7 +8,8 @@ from GroupWindow import *
 # a mother class AbstractStageManager with all common methods
 
 class GroupStageManager:
-    def __init__(self, participants, nGroups):
+    def __init__(self, root, participants, nGroups):
+        self.root = root
         self.participants = participants
         self.n = len(self.participants)
         self.nGroups = nGroups
@@ -70,9 +71,9 @@ class GroupStageManager:
 
     def classifyGroup(self, i):
         nameGroup = f"Group Stage: order group {i+1} / {self.nGroups}"
-        window = GroupWindow(self.groups[i], nameGroup)
+        window = GroupWindow(self.root, self.groups[i], nameGroup)
         self.groups[i] = window.classify()
-        window.root.destroy()
+        window.frame.destroy()
 
     def classifyGroups(self):
         for i in range(self.nGroups):

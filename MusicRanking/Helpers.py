@@ -32,19 +32,20 @@ def getListFromFolder(key=".jpg"):
             filteredList.append(el)
     return filteredList
 
-def inputPath(message):
-    root = tk.Tk()
-    label = ttk.Label(root, text=message)
+def inputPath(message, root):
+    frame = ttk.Frame(root)
+    frame.pack()
+    label = ttk.Label(frame, text=message)
     label.pack()
     message2 = f"Current directory: {os.getcwd()}"
-    label2 = ttk.Label(root, text=message2)
+    label2 = ttk.Label(frame, text=message2)
     label2.pack()
-    entry = ttk.Entry(root)
+    entry = ttk.Entry(frame)
     entry.pack()
     entry.focus()
-    button = ttk.Button(root, text="confirm", command=root.quit)
+    button = ttk.Button(frame, text="confirm", command=root.quit)
     button.pack()
     root.mainloop()
     filename = entry.get()
-    root.destroy()
+    frame.destroy()
     return filename

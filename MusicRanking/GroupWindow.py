@@ -5,20 +5,25 @@ import math
 from SlideElement import *
 
 class GroupWindow:
-    def __init__(self, nameList, nameWindow):
-        self.init(nameList, nameWindow, SlideElement, self.goUp, self.goDown)
+    def __init__(self, root, nameList, nameWindow):
+        self.init(root, nameList, nameWindow, SlideElement, self.goUp, self.goDown)
 
-    def init(self, nameList, nameWindow, Element, callbackButtonUp, callbackButtonDown):
+    def init(self, root, nameList, nameWindow, Element, callbackButtonUp, callbackButtonDown):
+        self.root = root
+        self.root.title(nameWindow)
+        self.frame = ttk.Frame(self.root,
+                               height=900,
+                               width=1440,
+                               relief='raised')
+        self.frame.pack()
         self.nSlideElements = len(nameList) # number of slideElements
         self.ranking = []
-        self.root = tk.Tk()
-        self.root.title(nameWindow)
         self.elementPerColumn = 12
         self.slideElements = []
         for i in range(self.nSlideElements):
-            self.slideElements.append(Element(self.root, nameList[i], callbackButtonUp, callbackButtonDown))
+            self.slideElements.append(Element(self.frame, nameList[i], callbackButtonUp, callbackButtonDown))
         # add button validating current ranking
-        self.validRankingButton = ttk.Button(self.root, 
+        self.validRankingButton = ttk.Button(self.frame, 
                                              text="validate ranking", 
                                              command=self.validateRanking)
         self.initElementsOnWindow(Element, callbackButtonUp, callbackButtonDown)
@@ -27,10 +32,10 @@ class GroupWindow:
     
     def initElementsOnWindow(self, Element, callbackButtonUp, callbackButtonDown):
         if self.nSlideElements <= self.elementPerColumn:
-            self.root.columnconfigure(0, weight=5)
-            self.root.columnconfigure(1, weight=1)
+            self.frame.columnconfigure(0, weight=5)
+            self.frame.columnconfigure(1, weight=1)
             for i in range(self.nSlideElements):
-                self.root.rowconfigure(i, weight=1)
+                self.frame.rowconfigure(i, weight=1)
                 self.slideElements[i].frame.grid(column=0, row=i)
             self.validRankingButton.grid(column=1,row=0)
         else:
@@ -38,12 +43,12 @@ class GroupWindow:
             # build columns
             for i in range(self.nColumnWithElements):
                 print(f"making column {i}")
-                self.root.columnconfigure(i, weight=5)
-            self.root.columnconfigure(self.nColumnWithElements, weight=1)
+                self.frame.columnconfigure(i, weight=5)
+            self.frame.columnconfigure(self.nColumnWithElements, weight=1)
             # build rows
             for i in range(self.elementPerColumn):
                 print(f"making row {i}")
-                self.root.rowconfigure(i, weight=1)
+                self.frame.rowconfigure(i, weight=1)
             # assign Elements to grid
             for indexColumn in range(self.nColumnWithElements):
                 for indexRow in range(self.elementPerColumn):
@@ -119,6 +124,7 @@ class GroupWindow:
 
 
 if __name__ == "__main__":
+    # outdated
     nameList = ["comme un boomerang", "la marseillaise", "grand pianola music"]
     window = GroupWindow(nameList)
     window.root.mainloop()

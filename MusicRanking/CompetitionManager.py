@@ -23,18 +23,19 @@ class CompetitionManager:
         self.nGroupGroupStage = 3
         self.nGroupSeasonStage = 3
         self.nSeasons = 1
+        self.root = tk.Tk()
         self.chooseCompetitionSetup()
 
     def chooseCompetitionSetup(self):
-        self.root = tk.Tk()
+        # TODO: transform this function into a class
         
         self.styleButtonPressed = ttk.Style()
         self.styleButtonPressed.theme_use('alt')
         self.styleButtonPressed.configure("Pressed.TButton", background='green')
 
         self.frame = ttk.Frame(self.root, 
-                               height=300,
-                               width=480,
+                               height=900,
+                               width=1440,
                                relief='raised')
         # column 0 for label proposing a specific stage
         self.frame.columnconfigure(0, weight=3)
@@ -114,7 +115,7 @@ class CompetitionManager:
                 self.nSeasons = int(self.entries[2].get())
         
         # destroy window
-        self.root.destroy()
+        self.frame.destroy()
 
     def confirmStage(self, button):
         # define style for button pressed
@@ -128,21 +129,17 @@ class CompetitionManager:
         if buttonNumber == 2:
             self.doFinalGroupStage = True
             self.buttons[2].config(style="Pressed.TButton")
-
-        
-
-
-
     
     def writeRanking(self):
-        filename = inputPath("Enter filename to write the ranking")
+        filename = inputPath("Enter filename to write the ranking", self.root)
         with open(filename, "w") as file:
             for i in range(self.n):
                 file.write(f"{i+1}: {self.participants[i]}\n")
 
     def manageCompetition(self):
         if self.doGroupStage:
-            manager = GroupStageManager(self.participants, 
+            manager = GroupStageManager(self.root,
+                                        self.participants, 
                                         self.nGroupGroupStage)
             self.participants = manager.manageCompetition()
         if self.doSeasonStage:
