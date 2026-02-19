@@ -5,5 +5,7 @@ save_classement_mars_2019
 *.wma
 *.jpg
 *.pyc
-ranking.txt
-MusicRanking\ranking.txt
+*.txt
+*.spec
+liste de musique la plus a jour liens symboliques/
+Classement*
