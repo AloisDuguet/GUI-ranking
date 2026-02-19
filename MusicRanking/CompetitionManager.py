@@ -15,6 +15,9 @@ class CompetitionManager:
                  nGroupGroupStage=3, 
                  nGroupSeasonStage=3, 
                  nSeasons=3):
+        self.root = tk.Tk()
+        if nameList == []:
+            nameList = getListFromFolder(self.root)
         self.participants = nameList
         self.n = len(self.participants)
 
@@ -24,7 +27,6 @@ class CompetitionManager:
         self.nGroupGroupStage = 3
         self.nGroupSeasonStage = 3
         self.nSeasons = 1
-        self.root = tk.Tk()
         self.chooseCompetitionSetup()
 
     def chooseCompetitionSetup(self):
@@ -174,7 +176,8 @@ class CompetitionManager:
         self.writeRanking()
 
 def main():
-    nameList = getListFromFolder()
+    nameList = []
+    #nameList = getListFromFolder(tk.Tk())
     #nameList = parseListFromTxt("listsToSort/mangas.txt")
     
     print("defining competition")
@@ -187,6 +190,5 @@ if __name__ == "__main__":
     main()
 
 # TODOs
-#put getListFromFolder as the automatic list getter when nameList is empty
-#when elements are too long the buttons disappear to the right of the grid element
 #when two windows are open, maybe the style is not applied properly (it happened when I used getListFromFolder with its own root)
+#in the same situation, when elements are too long the buttons disappear to the right of the grid element

@@ -27,13 +27,14 @@ def getSpecificList(name):
                 "My Hero Academia", "Detective Conan",
                 "Vinland Saga", "Golden Kamui"]
 
-def getListFromFolder(key=".jpg"):
+def getListFromFolder(root, key=".jpg"):
     """returns a list with all files of folder
     except the ones containing <key>"""
-    folder = inputPath("Enter path to folder with list to build", tk.Tk())
+    folder = inputPath("Enter path to folder with list to build", root)
     list = os.listdir(folder)
     filteredList = []
     for el in list:
         if key not in el:
             filteredList.append(el)
+    
     return filteredList
