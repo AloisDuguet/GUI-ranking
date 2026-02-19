@@ -4,6 +4,7 @@ from GroupStageManager import *
 from SeasonStageManager import *
 from FinalGroupStageManager import *
 from Helpers import *
+from Parsers import *
 
 class CompetitionManager:
     def __init__(self, 
@@ -172,25 +173,15 @@ class CompetitionManager:
         GroupStageManager.printParticipants(self, with_ranking=True)
         self.writeRanking()
 
-if __name__ == "__main__":
-    nameList = ["Naruto", "Full Metal Alchemist", 
-                "Frieren", "One Punch Man", 
-                "Devilman: crybaby", "Hunter x Hunter",
-                "Dragon Ball", "Jujutsu Kaisen",
-                "L'Attaque des Titans", "Bleach",
-                "SaikiK", "One Piece",
-                "Uncle from Another World", "Mob Psycho 100",
-                "Alice in Wonderland", "Solo Leveling",
-                "My Hero Academia", "Detective Conan",
-                "Vinland Saga", "Golden Kamui"]
-    nameList = ["Naruto", "Full Metal Alchemist", 
-                "Frieren", "One Punch Man"]
-    
-    #nameList = getListFromFolder()
-    #print(f"list: {nameList}")
+def main():
+    nameList = getListFromFolder()
+    #nameList = parseListFromTxt("listsToSort/mangas.txt")
     
     print("defining competition")
     manager = CompetitionManager(nameList, True, True, True, 6, 6, 3)
     print("starting competition")
     manager.manageCompetition()
     # TODO: only one window is open the whole execution, instead of having a window per group
+
+if __name__ == "__main__":
+    main()

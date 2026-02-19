@@ -22,16 +22,6 @@ def getUniqueSuccessorID(dataFile):
     print("number of Music ID: ", countMusic+1)
     return countMusic+1
 
-def getListFromFolder(key=".jpg"):
-    # returns a list with all elements of folder
-    folder = inputPath("Enter path to folder with list to build")
-    list = os.listdir(folder)
-    filteredList = []
-    for el in list:
-        if key not in el:
-            filteredList.append(el)
-    return filteredList
-
 def inputPath(message, root):
     frame = ttk.Frame(root,
                       relief='raised')
