@@ -6,15 +6,18 @@ from FinalGroupStageManager import *
 from Helpers import *
 from Parsers import *
 
+def isPositiveInteger(what):
+    try:
+        if int(what) > 0:
+            return True
+        else:
+            return False
+    except:
+        return False
+
 class CompetitionManager:
     def __init__(self, 
-                 nameList,
-                 doGroupStage=True, 
-                 doSeasonStage=True,
-                 doFinalGroupStage=True,
-                 nGroupGroupStage=3, 
-                 nGroupSeasonStage=3, 
-                 nSeasons=3):
+                 nameList):
         self.root = tk.Tk()
         if nameList == []:
             nameList = getListFromFolder(self.root)
@@ -80,9 +83,10 @@ class CompetitionManager:
         self.frameEntries.append(ttk.Frame(self.frame))
         self.frameEntries.append(ttk.Frame(self.frame))
         self.entries = []
-        self.entries.append(ttk.Entry(self.frameEntries[0]))
-        self.entries.append(ttk.Entry(self.frameEntries[1]))
-        self.entries.append(ttk.Entry(self.frameEntries[1]))
+        positiveIntegerCommand = self.frame.register(isPositiveInteger)
+        self.entries.append(ttk.Entry(self.frameEntries[0], validate='all', validatecommand=(positiveIntegerCommand,'%P')))
+        self.entries.append(ttk.Entry(self.frameEntries[1], validate='all', validatecommand=(positiveIntegerCommand,'%P')))
+        self.entries.append(ttk.Entry(self.frameEntries[1], validate='all', validatecommand=(positiveIntegerCommand,'%P')))
         self.labelEntries = []
         self.labelEntries.append(ttk.Label(self.frameEntries[0], text="number of groups:"))
         self.labelEntries.append(ttk.Label(self.frameEntries[1], text="number of groups:"))
@@ -124,6 +128,7 @@ class CompetitionManager:
         if self.doGroupStage:
             # TODO: add safeguards that the entry is int 
             # and that it is strictly positive
+            # cf https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/entry-validation.html
             if int(self.entries[0].get()) > 0:
                 self.nGroupGroupStage = int(self.entries[0].get())
         if self.doSeasonStage:
@@ -181,7 +186,7 @@ def main():
     #nameList = parseListFromTxt("listsToSort/mangas.txt")
     
     print("defining competition")
-    manager = CompetitionManager(nameList, True, True, True, 6, 6, 3)
+    manager = CompetitionManager(nameList)
     print("starting competition")
     manager.manageCompetition()
     # TODO: only one window is open the whole execution, instead of having a window per group
