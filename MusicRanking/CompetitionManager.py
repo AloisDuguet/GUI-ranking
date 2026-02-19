@@ -185,3 +185,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# TODOs
+#put getListFromFolder as the automatic list getter when nameList is empty
+#when elements are too long the buttons disappear to the right of the grid element
+#when two windows are open, maybe the style is not applied properly (it happened when I used getListFromFolder with its own root)
