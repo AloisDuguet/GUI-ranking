@@ -42,20 +42,20 @@ class CompetitionManager:
         self.frame = ttk.Frame(self.root,
                                relief='raised')
         
-        # fix the size and position of the window in the middle of the screen
-        window_width = 1000
-        window_height = 600
-        
         # get the screen dimension
-        screen_width = self.root.winfo_screenwidth()
-        screen_height = self.root.winfo_screenheight()
+        screenWidth = self.root.winfo_screenwidth()
+        screenHeight = self.root.winfo_screenheight()
+        
+        # fix the size and position of the window in the middle of the screen
+        windowWidth = screenWidth
+        windowHeight = screenHeight
 
         # find the center point
-        center_x = int(screen_width/2 - window_width / 2)
-        center_y = int(screen_height/2 - window_height / 2)
+        centerX = int(screenWidth/2 - windowWidth / 2)
+        centerY = int(screenHeight/2 - windowHeight / 2)
 
         # set the position of the window to the center of the screen
-        self.root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
+        self.root.geometry(f'{windowWidth}x{windowHeight}+{centerX}+{centerY}')
 
         self.root.title("Setup of Competition")
         # column 0 for label proposing a specific stage
@@ -189,8 +189,7 @@ def main():
     manager = CompetitionManager(nameList)
     print("starting competition")
     manager.manageCompetition()
-    # TODO: only one window is open the whole execution, instead of having a window per group
-
+    
 if __name__ == "__main__":
     main()
 
