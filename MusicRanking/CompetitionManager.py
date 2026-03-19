@@ -3,6 +3,7 @@ import os
 from GroupStageManager import *
 from SeasonStageManager import *
 from FinalGroupStageManager import *
+from ResultWindow import *
 from Helpers import *
 from Parsers import *
 
@@ -195,6 +196,8 @@ class CompetitionManager:
             self.participants = manager.manageCompetition()
         print("Final ranking of the competition:")
         GroupStageManager.printParticipants(self, with_ranking=True)
+        manager = ResultWindow(self.root, self.participants)
+        manager.showResults()
         self.writeRanking()
 
 def main():
