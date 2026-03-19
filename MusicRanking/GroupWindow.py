@@ -33,7 +33,7 @@ class GroupWindow:
         self.elementPerColumn = 12
         self.slideElements = []
         for i in range(self.nSlideElements):
-            self.slideElements.append(Element(self.frame, nameList[i], callbackButtonUp, callbackButtonDown))
+            self.slideElements.append(Element(self.frame, nameList[i], callbackButtonUp, callbackButtonDown, i+1))
         # add button validating current ranking
         self.validRankingButton = ttk.Button(self.frame, 
                                              text="validate ranking", 
@@ -97,6 +97,11 @@ class GroupWindow:
         self.slideElements[indexClick-1].frame.grid(column=col, row=row)
         # exchange place of the two slide elements in the list
         self.slideElements[indexClick], self.slideElements[indexClick-1] = self.slideElements[indexClick-1], self.slideElements[indexClick]
+        # exchange ranking of the two slide elements
+        self.slideElements[indexClick].ranking, self.slideElements[indexClick-1].ranking = self.slideElements[indexClick-1].ranking, self.slideElements[indexClick].ranking
+        # update text of the label for the ranking
+        self.slideElements[indexClick].rankingLabel.config(text="{} - ".format(self.slideElements[indexClick].ranking))
+        self.slideElements[indexClick-1].rankingLabel.config(text="{} - ".format(self.slideElements[indexClick-1].ranking))
         if indexClick == 1:
             # disable new button up of element 0 and enable the one of element 1
             self.slideElements[0].up.state(['disabled'])
@@ -115,6 +120,11 @@ class GroupWindow:
         self.slideElements[indexClick+1].frame.grid(column=col, row=row)
         # exchange place of the two slide elements in the list
         self.slideElements[indexClick], self.slideElements[indexClick+1] = self.slideElements[indexClick+1], self.slideElements[indexClick]
+        # exchange ranking of the two slide elements
+        self.slideElements[indexClick].ranking, self.slideElements[indexClick+1].ranking = self.slideElements[indexClick+1].ranking, self.slideElements[indexClick].ranking
+        # update text of the label for the ranking
+        self.slideElements[indexClick].rankingLabel.config(text="{} - ".format(self.slideElements[indexClick].ranking))
+        self.slideElements[indexClick+1].rankingLabel.config(text="{} - ".format(self.slideElements[indexClick+1].ranking))
         if indexClick == 0: 
             # disable new button up of element 0 and enable the one of element 1
             self.slideElements[0].up.state(['disabled'])

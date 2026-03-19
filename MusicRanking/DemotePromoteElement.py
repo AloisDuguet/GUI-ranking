@@ -1,8 +1,9 @@
 from SlideElement import *
 
 class DemotePromoteElement(SlideElement):
-    def __init__(self, master, name, callbackPromote, callbackDemote):
-        SlideElement.__init__(self, master, name, callbackPromote, callbackDemote)
+    def __init__(self, master, name, callbackPromote, callbackDemote, ranking):
+        SlideElement.__init__(self, master, name, callbackPromote, callbackDemote,"undefined")
+        self.rankingLabel.grid_remove()
         self.up["text"] = "promote"
         self.down["text"] = "demote"
         self.toBePromoted = False
