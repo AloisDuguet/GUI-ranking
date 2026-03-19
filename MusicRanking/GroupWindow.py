@@ -6,11 +6,25 @@ from SlideElement import *
 
 class GroupWindow:
     def __init__(self, root, nameList, nameWindow):
-        self.init(root, nameList, nameWindow, SlideElement, self.goUp, self.goDown)
+        explanationMessage = "Rank all competitors of this group.\n" \
+            "Top position is the best position.\n" \
+            "The button 'go up' exchanges the ranking of the corresponding competitor " \
+            "with the competitor immediately stronger, while" \
+            "the button 'go down' exchanges the ranking of the corresponding competitor " \
+            "with the competitor immediately weaker. " \
+            "Thus, the current strongest competitor of the group can not go up " \
+            "and the current worst competitor of the group can not go down.\n" \
+            "When done, click the 'validate ranking' to confirm this ranking."
+        self.init(root, nameList, nameWindow, explanationMessage, SlideElement, self.goUp, self.goDown)
 
-    def init(self, root, nameList, nameWindow, Element, callbackButtonUp, callbackButtonDown):
+    def init(self, root, nameList, nameWindow, explanationMessage, Element, callbackButtonUp, callbackButtonDown):
         self.root = root
         self.root.title(nameWindow)
+
+        # display explanationMessage as the first element of the window
+        self.explanation = tk.Message(self.root, text=explanationMessage, width = 800)
+        self.explanation.pack()
+
         self.frame = ttk.Frame(self.root,
                                relief='raised')
         self.frame.pack()
@@ -118,6 +132,8 @@ class GroupWindow:
 
     def classify(self):
         self.root.mainloop()
+        self.explanation.destroy()
+        self.frame.destroy()
         return self.ranking
 
 

@@ -50,7 +50,7 @@ class CompetitionManager:
             "Multiple season demote/promote stage: competitors are split into n groups of same level according to (potential) previous ranking. " \
             "Each season, you decide which competitors of the group should be promoted to the immediately stronger group, and which competitors should be demoted to the immediately weaker group. " \
             "At the start of the next season, the competitors promoted or demoted are put in the corresponding group.\n" \
-            "Final one-group stage: all competitors are put in the same group, with an initial ordering according to (potential) previous ranking. You will decide the exact ranking of this group.",
+            "Final one-group stage: all competitors are put in the same group, with an initial ranking according to (potential) previous ranking. You will decide the exact ranking of this group.",
             width=800)
         explanation.pack()
 
@@ -73,7 +73,7 @@ class CompetitionManager:
         # set the position of the window to the center of the screen
         self.root.geometry(f'{windowWidth}x{windowHeight}+{centerX}+{centerY}')
 
-        self.root.title("Setup of Competition")
+        self.root.title("Setup of the competition")
         # column 0 for label proposing a specific stage
         self.frame.columnconfigure(0, weight=3)
         # column 1 for button to accept the stage 

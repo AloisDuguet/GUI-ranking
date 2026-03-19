@@ -70,10 +70,10 @@ class GroupStageManager:
                 self.printGroup(i)
 
     def classifyGroup(self, i):
-        nameGroup = f"Group Stage: order group {i+1} / {self.nGroups}"
+        nameGroup = f"Group Stage: group {i+1} / {self.nGroups}"
         window = GroupWindow(self.root, self.groups[i], nameGroup)
         self.groups[i] = window.classify()
-        window.frame.destroy()
+        #window.frame.destroy()
 
     def classifyGroups(self):
         for i in range(self.nGroups):
