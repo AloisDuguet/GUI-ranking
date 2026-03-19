@@ -39,6 +39,22 @@ class CompetitionManager:
         self.styleButtonPressed.theme_use('alt')
         self.styleButtonPressed.configure("Pressed.TButton", background='green')
 
+        # explanation of the setup screen
+        explanation = tk.Message(self.root,
+            text="Select the stages you want in the competition by clicking the corresponding 'add stage'.\n" \
+            "Some stages have options on the right of the 'add stage' button. " \
+            "Complete them if you added the stage.\n" \
+            "After fulfilling what you need, click 'confirm choices' to start the competition.\n\n" \
+            "Explanation of the different stages:\n" \
+            "Initial group stage: all competitors are randomly split into n groups, and you will decide for each group the ranking.\n" \
+            "Multiple season demote/promote stage: competitors are split into n groups of same level according to (potential) previous ranking. " \
+            "Each season, you decide which competitors of the group should be promoted to the immediately stronger group, and which competitors should be demoted to the immediately weaker group. " \
+            "At the start of the next season, the competitors promoted or demoted are put in the corresponding group.\n" \
+            "Final one-group stage: all competitors are put in the same group, with an initial ordering according to (potential) previous ranking. You will decide the exact ranking of this group.",
+            width=800)
+        explanation.pack()
+
+        # the setup of the competition is in a frame
         self.frame = ttk.Frame(self.root,
                                relief='raised')
         
@@ -91,7 +107,7 @@ class CompetitionManager:
         self.labelEntries.append(ttk.Label(self.frameEntries[0], text="number of groups:"))
         self.labelEntries.append(ttk.Label(self.frameEntries[1], text="number of groups:"))
         self.labelEntries.append(ttk.Label(self.frameEntries[1], text="number of seasons:"))
-        self.confirmButton = ttk.Button(self.frame, text="Confirm choices", command = self.root.quit)
+        self.confirmButton = ttk.Button(self.frame, text="confirm choices", command = self.root.quit)
 
         # fill in the grid
         # two first columns
@@ -138,6 +154,7 @@ class CompetitionManager:
                 self.nSeasons = int(self.entries[2].get())
         
         # destroy window
+        explanation.destroy()
         self.frame.destroy()
 
     def confirmStage(self, button):

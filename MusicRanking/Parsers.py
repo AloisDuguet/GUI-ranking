@@ -30,7 +30,7 @@ def getSpecificList(name):
 def getListFromFolder(root, key=".jpg"):
     """returns a list with all files of folder
     except the ones containing <key>"""
-    folder = inputPath("Enter path to folder with list to build", root)
+    folder = inputPath("Enter path to folder: each file of this folder will be in the competition", root)
     list = os.listdir(folder)
     filteredList = []
     for el in list:
