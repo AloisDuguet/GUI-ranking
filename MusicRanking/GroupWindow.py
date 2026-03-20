@@ -45,12 +45,12 @@ class GroupWindow:
     
     def initElementsOnWindow(self, Element, callbackButtonUp, callbackButtonDown):
         if self.nSlideElements <= self.elementPerColumn:
-            self.frame.columnconfigure(0, weight=5)
-            self.frame.columnconfigure(1, weight=1)
+            self.frame.columnconfigure(0)
+            self.frame.columnconfigure(1)
             for i in range(self.nSlideElements):
-                self.frame.rowconfigure(i, weight=1)
+                self.frame.rowconfigure(i)
                 self.slideElements[i].frame.grid(column=0, row=i)
-            self.validRankingButton.grid(column=1,row=0)
+            self.validRankingButton.grid(column=1,row=0,sticky=tk.W+tk.E+tk.N+tk.S,rowspan=self.nSlideElements)
         else:
             self.nColumnWithElements = int(math.ceil(self.nSlideElements/self.elementPerColumn))
             # build columns
@@ -80,7 +80,7 @@ class GroupWindow:
         style = ttk.Style()
         style.theme_use('alt')
         style.configure('TButton', background = 'grey', foreground = 'white')
-        style.map('TButton', background=[('active','blue')])
+        style.map('TButton', background=[('active','darkgrey')])
         # change Label style
         style.configure('TLabel', width = 40) # useful?
     

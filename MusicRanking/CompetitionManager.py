@@ -41,6 +41,8 @@ class CompetitionManager:
         self.styleButtonPressed = ttk.Style()
         self.styleButtonPressed.theme_use('alt')
         self.styleButtonPressed.configure("Pressed.TButton", background='green')
+        self.styleButtonPressed.configure('TButton', background = 'grey', foreground = 'white')
+        self.styleButtonPressed.map('TButton', background=[('active','darkgrey')])
 
         # explanation of the setup screen
         explanation = tk.Message(self.root,
@@ -137,7 +139,7 @@ class CompetitionManager:
         self.entries[2].grid(column=1, row=1)
         self.frameEntries[1].grid(column=2, row=1)
         # fourth column
-        self.confirmButton.grid(column=3, row=0)
+        self.confirmButton.grid(column=3, row=0, rowspan=3, sticky=tk.N+tk.S+tk.W+tk.E)
 
         self.frame.pack(ipadx=5,ipady=5)
 
