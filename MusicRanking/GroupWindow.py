@@ -37,7 +37,8 @@ class GroupWindow:
         # add button validating current ranking
         self.validRankingButton = ttk.Button(self.frame, 
                                              text="validate ranking", 
-                                             command=self.validateRanking)
+                                             command=self.validateRanking,
+                                             width=20)
         self.initElementsOnWindow(Element, callbackButtonUp, callbackButtonDown)
         self.disableButtons()
         self.widgetStyles()
@@ -81,7 +82,7 @@ class GroupWindow:
         style.configure('TButton', background = 'grey', foreground = 'white')
         style.map('TButton', background=[('active','blue')])
         # change Label style
-        style.configure('TLabel', width = 40)
+        style.configure('TLabel', width = 40) # useful?
     
     def getGridPosition(self, position):
         indexColumn = int(position/self.elementPerColumn)
