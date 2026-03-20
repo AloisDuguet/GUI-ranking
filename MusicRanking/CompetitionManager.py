@@ -4,6 +4,8 @@ from GroupStageManager import *
 from SeasonStageManager import *
 from FinalGroupStageManager import *
 from ResultWindow import *
+import tkinter
+from tkinter import font
 from Helpers import *
 from Parsers import *
 
@@ -52,7 +54,8 @@ class CompetitionManager:
             "Each season, you decide which competitors of the group should be promoted to the immediately stronger group, and which competitors should be demoted to the immediately weaker group. " \
             "At the start of the next season, the competitors promoted or demoted are put in the corresponding group.\n" \
             "Final one-group stage: all competitors are put in the same group, with an initial ranking according to (potential) previous ranking. You will decide the exact ranking of this group.",
-            width=800)
+            width=800,
+            font=(tk.font.nametofont("TkTextFont").actual()["family"],10))
         explanation.pack()
 
         # the setup of the competition is in a frame
@@ -136,7 +139,7 @@ class CompetitionManager:
         # fourth column
         self.confirmButton.grid(column=3, row=0)
 
-        self.frame.pack()
+        self.frame.pack(ipadx=5,ipady=5)
 
         # launch window
         self.root.mainloop()

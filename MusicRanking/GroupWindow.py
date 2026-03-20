@@ -22,7 +22,7 @@ class GroupWindow:
         self.root.title(nameWindow)
 
         # display explanationMessage as the first element of the window
-        self.explanation = tk.Message(self.root, text=explanationMessage, width = 800)
+        self.explanation = tk.Message(self.root, text=explanationMessage, width = 800, font=(tk.font.nametofont("TkTextFont").actual()["family"],10))
         self.explanation.pack()
 
         self.frame = ttk.Frame(self.root,
