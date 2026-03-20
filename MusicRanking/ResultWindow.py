@@ -17,12 +17,13 @@ class ResultWindow:
             self.elements[i].pack()
         
         # add button to close this window
-        self.closeButton = ttk.Button(self.root,
+        self.closeButton = ttk.Button(self.frame,
                                       text="close ranking",
-                                      command=self.root.quit())
+                                      command=self.root.quit)
         
     def showResults(self):
         self.frame.pack()
         self.closeButton.pack()
         self.root.mainloop()
+        self.frame.destroy()
         return 0
