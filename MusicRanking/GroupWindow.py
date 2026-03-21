@@ -25,30 +25,48 @@ class GroupWindow:
         self.explanation = tk.Message(self.root, text=explanationMessage, width = 800, font=(tk.font.nametofont("TkTextFont").actual()["family"],10))
         self.explanation.pack()
 
-        self.frame = ttk.Frame(self.root,
+        # setup of canvas inside overall frame
+        self.overallFrame = ttk.Frame(self.root,
                                relief='raised')
-        self.frame.pack()
+        self.canvas = tk.Canvas(self.overallFrame,
+                                width=50,
+                                height=50,
+                                scrollregion=(0,0,2000,2000))
+        
+        # setup of horizontal scrollbar with the overall frame, scrolling the canvas
+        self.scrollbar = ttk.Scrollbar(self.overallFrame, 
+                                       orient=tk.HORIZONTAL, 
+                                       command=self.canvas.xview)
+        self.canvas['xscrollcommand'] = self.scrollbar.set
+
+        # setup of the inner frame containing the slideElements inside the canvas
+        self.frameWithElements = ttk.Frame(self.canvas,
+                               relief='raised')
         self.nSlideElements = len(nameList) # number of slideElements
         self.ranking = []
-        self.elementPerColumn = 12
+        self.elementPerColumn = 6
         self.slideElements = []
         for i in range(self.nSlideElements):
-            self.slideElements.append(Element(self.frame, nameList[i], callbackButtonUp, callbackButtonDown, i+1))
+            self.slideElements.append(Element(self.frameWithElements, nameList[i], callbackButtonUp, callbackButtonDown, i+1))
         # add button validating current ranking
-        self.validRankingButton = ttk.Button(self.frame, 
+        self.validRankingButton = ttk.Button(self.frameWithElements, 
                                              text="validate ranking", 
                                              command=self.validateRanking,
                                              width=20)
         self.initElementsOnWindow(Element, callbackButtonUp, callbackButtonDown)
         self.disableButtons()
         self.widgetStyles()
+        self.frameWithElements.pack()
+        self.scrollbar.pack(side=tk.TOP, fill=tk.X)
+        self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        self.overallFrame.pack(fill=tk.Y, expand=False)
     
     def initElementsOnWindow(self, Element, callbackButtonUp, callbackButtonDown):
         if self.nSlideElements <= self.elementPerColumn:
-            self.frame.columnconfigure(0, weight=5)
-            self.frame.columnconfigure(1, weight=1)
+            self.frameWithElements.columnconfigure(0, weight=5)
+            self.frameWithElements.columnconfigure(1, weight=1)
             for i in range(self.nSlideElements):
-                self.frame.rowconfigure(i)
+                self.frameWithElements.rowconfigure(i)
                 self.slideElements[i].frame.grid(column=0, row=i)
             self.validRankingButton.grid(column=1,row=0,sticky=tk.W+tk.E+tk.N+tk.S,rowspan=self.nSlideElements)
         else:
@@ -56,12 +74,12 @@ class GroupWindow:
             # build columns
             for i in range(self.nColumnWithElements):
                 print(f"making column {i}")
-                self.frame.columnconfigure(i, weight=5)
-            self.frame.columnconfigure(self.nColumnWithElements, weight=1)
+                self.frameWithElements.columnconfigure(i, weight=5)
+            self.frameWithElements.columnconfigure(self.nColumnWithElements, weight=1)
             # build rows
             for i in range(self.elementPerColumn):
                 print(f"making row {i}")
-                self.frame.rowconfigure(i)
+                self.frameWithElements.rowconfigure(i)
             # assign Elements to grid
             for indexColumn in range(self.nColumnWithElements):
                 for indexRow in range(self.elementPerColumn):
@@ -144,7 +162,7 @@ class GroupWindow:
     def classify(self):
         self.root.mainloop()
         self.explanation.destroy()
-        self.frame.destroy()
+        self.frameWithElements.destroy()
         return self.ranking
 
 
