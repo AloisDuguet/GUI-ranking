@@ -1,9 +1,0 @@
-Music:
-ID: 1
-name: 4e symphonie 3e mouvement
-artist: Tchaikovsky
-compositionDate: 1878
-genres: romantism
-length: 353
-dateAdded: 2016-10
-
