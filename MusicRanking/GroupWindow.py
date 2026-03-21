@@ -179,7 +179,7 @@ class GroupWindow:
     def classify(self):
         self.root.mainloop()
         self.explanation.destroy()
-        self.frameWithElements.destroy()
+        self.overallFrame.destroy()
         return self.ranking
 
 
