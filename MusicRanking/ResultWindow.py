@@ -5,9 +5,21 @@ class ResultWindow:
     def __init__(self, root, participants):
         self.root = root
         self.participants = participants
-        self.text = tk.Text(self.root,
-                            height=len(self.participants),
-                            relief='raised')
+        self.frame = ttk.Frame(self.root,
+                               width=600,
+                               height=600,
+                               relief='raised')
+            
+        # add button to close this window
+        self.closeButton = ttk.Button(self.frame,
+                                      text="close ranking",
+                                      command=self.root.quit)
+        self.closeButton.pack()
+
+        # setup text
+        self.text = tk.Text(self.frame,
+                            height=len(self.participants))
+        self.text.pack()
 
         # fill in participants with corresponding ranking
         self.elements = []
@@ -24,20 +36,17 @@ class ResultWindow:
         # self.copy = self.text.get('10.0',tk.END)
         # print(type(self.copy))
         # print(self.copy)
-            
-        # add button to close this window
-        self.closeButton = ttk.Button(self.root,
-                                      text="close ranking",
-                                      command=self.root.quit)
         
         # add vertical scrollbar
-        self.scrollbar = ttk.Scrollbar(self.root, orient=tk.VERTICAL, command=self.text.yview)
+        self.scrollbar = ttk.Scrollbar(self.frame,
+                                       orient=tk.VERTICAL, 
+                                       command=self.text.yview)
         self.text['yscrollcommand'] = self.scrollbar.set
         
     def showResults(self):
-        self.text.pack(fill="both", expand=True)
-        self.closeButton.pack()
+        self.frame.pack(fill="both", expand=True)
         self.root.mainloop()
         self.text.destroy()
         self.closeButton.destroy()
+        self.frame.destroy()
         return 0
