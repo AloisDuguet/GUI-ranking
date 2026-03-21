@@ -1,11 +1,12 @@
 import os
+import tkinter as tk
+from tkinter import font
 
 from GroupStageManager import *
 from SeasonStageManager import *
 from FinalGroupStageManager import *
 from ResultWindow import *
-import tkinter
-from tkinter import font
+from ChooseListWindow import *
 from Helpers import *
 from Parsers import *
 
@@ -20,11 +21,13 @@ def isPositiveInteger(what):
 
 class CompetitionManager:
     def __init__(self, 
-                 nameList):
+                 competitorsList):
         self.root = tk.Tk()
-        if nameList == []:
-            nameList = getListFromFolder(self.root)
-        self.participants = nameList
+        if competitorsList == []:
+            #competitorsList = getListFromFolder(self.root)
+            self.chooseListWindow = ChooseListWindow(self.root)
+            competitorsList = self.chooseListWindow.chooseList()
+        self.participants = competitorsList
         self.n = len(self.participants)
 
         self.doGroupStage = False
@@ -206,12 +209,12 @@ class CompetitionManager:
         self.writeRanking()
 
 def main():
-    nameList = []
-    #nameList = getListFromFolder(tk.Tk())
-    #nameList = parseListFromTxt("listsToSort/mangas.txt")
+    competitorsList = []
+    #competitorsList = getListFromFolder(tk.Tk())
+    #competitorsList = parseListFromTxt("listsToSort/mangas.txt")
     
     print("defining competition")
-    manager = CompetitionManager(nameList)
+    manager = CompetitionManager(competitorsList)
     print("starting competition")
     manager.manageCompetition()
     

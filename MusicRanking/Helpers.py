@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import filedialog as fd
 import os
+from tkinter.messagebox import showinfo
 
 def makeStringFromList(l):
     # concatenate elements with '-' between two elements
@@ -41,3 +43,28 @@ def inputPath(message, root):
     filename = entry.get()
     frame.destroy()
     return filename
+
+def selectFile():
+    filetypes = (
+        ('text files', '*.txt'),
+        ('All files', '*.*')
+    )
+    filename = fd.askopenfilename(
+        title='open a file',
+        initialdir='/',
+        filetypes=filetypes)
+    showinfo(title='Selected file',
+             message=filename)
+    return filename
+
+def openTextFile():
+    filetypes = (
+        ('text files', '*.txt'),
+        ('All files', '*.*')
+    )
+    f = fd.askopenfile(
+        title='open a file',
+        initialdir='/',
+        filetypes=filetypes)
+    return f
+    

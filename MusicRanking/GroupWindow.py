@@ -82,8 +82,8 @@ class GroupWindow:
             self.frameWithElements.columnconfigure(1)
             for i in range(self.nSlideElements):
                 self.frameWithElements.rowconfigure(i)
-                self.slideElements[i].frame.grid(column=0, row=i)
-            self.validRankingButton.grid(column=1,row=0,sticky=tk.W+tk.E+tk.N+tk.S,rowspan=self.nSlideElements)
+                self.slideElements[i].frame.grid(column=0, row=i, sticky='news')
+            self.validRankingButton.grid(column=1,row=0,sticky='news',rowspan=self.nSlideElements)
         else:
             self.nColumnWithElements = int(math.ceil(self.nSlideElements/self.elementPerColumn))
             # build columns
@@ -100,8 +100,8 @@ class GroupWindow:
                 for indexRow in range(self.elementPerColumn):
                     indexElement = self.elementPerColumn*indexColumn+indexRow
                     if indexElement < self.nSlideElements:
-                        self.slideElements[indexElement].frame.grid(column=indexColumn, row=indexRow, sticky="news")
-            self.validRankingButton.grid(column=self.nColumnWithElements,row=0,sticky=tk.W+tk.E+tk.N+tk.S,rowspan=self.elementPerColumn)
+                        self.slideElements[indexElement].frame.grid(column=indexColumn, row=indexRow, sticky='news')
+            self.validRankingButton.grid(column=self.nColumnWithElements,row=0,sticky='news',rowspan=self.elementPerColumn)
 
     def disableButtons(self):
         # disable interdicted buttons
