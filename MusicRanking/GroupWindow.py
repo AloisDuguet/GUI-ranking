@@ -74,8 +74,8 @@ class GroupWindow:
             # build columns
             for i in range(self.nColumnWithElements):
                 print(f"making column {i}")
-                self.frameWithElements.columnconfigure(i, weight=5)
-            self.frameWithElements.columnconfigure(self.nColumnWithElements, weight=1)
+                self.frameWithElements.columnconfigure(i)
+            self.frameWithElements.columnconfigure(self.nColumnWithElements)
             # build rows
             for i in range(self.elementPerColumn):
                 print(f"making row {i}")
