@@ -61,11 +61,19 @@ class GroupWindow:
         self.overallFrame.pack(fill=tk.BOTH, expand=True)
 
         # update size of canvas with size of frameWithElements
+        self.updateScrollbarSize()
+
+    def updateScrollbarSize(self):
+        # update frame inside to get the right size
         self.frameWithElements.update()
+
+        # get the size
         self.canvasHeight = self.frameWithElements.winfo_height()
         self.canvasWidth = self.frameWithElements.winfo_width()
         print("width of inner frame: {}".format(self.canvasWidth))
         print("height of inner frame: {}".format(self.canvasHeight))
+
+        # resize the scrollable region
         self.canvas.config(scrollregion=(0,0,self.canvasWidth,self.canvasHeight))
     
     def initElementsOnWindow(self, Element, callbackButtonUp, callbackButtonDown):
@@ -135,6 +143,8 @@ class GroupWindow:
             self.slideElements[self.nSlideElements-1].down.state(['disabled'])
             self.slideElements[self.nSlideElements-2].down.state(['!disabled'])
         
+        self.updateScrollbarSize()
+        
     def goDown(self, slideElement):
         indexClick = self.slideElements.index(slideElement)
         # exchange place of the two slide elements on the window
@@ -157,6 +167,8 @@ class GroupWindow:
             # disable new button down of last element and enable the one of other element
             self.slideElements[self.nSlideElements-1].down.state(['disabled'])
             self.slideElements[self.nSlideElements-2].down.state(['!disabled'])
+        
+        self.updateScrollbarSize()
         
     def validateRanking(self):
         for i in range(self.nSlideElements):
