@@ -45,8 +45,8 @@ class GroupWindow:
     
     def initElementsOnWindow(self, Element, callbackButtonUp, callbackButtonDown):
         if self.nSlideElements <= self.elementPerColumn:
-            self.frame.columnconfigure(0)
-            self.frame.columnconfigure(1)
+            self.frame.columnconfigure(0, weight=5)
+            self.frame.columnconfigure(1, weight=1)
             for i in range(self.nSlideElements):
                 self.frame.rowconfigure(i)
                 self.slideElements[i].frame.grid(column=0, row=i)
@@ -61,14 +61,14 @@ class GroupWindow:
             # build rows
             for i in range(self.elementPerColumn):
                 print(f"making row {i}")
-                self.frame.rowconfigure(i, weight=1)
+                self.frame.rowconfigure(i)
             # assign Elements to grid
             for indexColumn in range(self.nColumnWithElements):
                 for indexRow in range(self.elementPerColumn):
                     indexElement = self.elementPerColumn*indexColumn+indexRow
                     if indexElement < self.nSlideElements:
                         self.slideElements[indexElement].frame.grid(column=indexColumn, row=indexRow)
-            self.validRankingButton.grid(column=self.nColumnWithElements,row=0)
+            self.validRankingButton.grid(column=self.nColumnWithElements,row=0,sticky=tk.W+tk.E+tk.N+tk.S,rowspan=self.elementPerColumn)
 
     def disableButtons(self):
         # disable interdicted buttons

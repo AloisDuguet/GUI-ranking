@@ -4,8 +4,6 @@ from tkinter import ttk
 class SlideElement:
     def __init__(self, master, name, callbackUp, callbackDown, ranking):
         self.frame = ttk.Frame(master, 
-                               height=60, 
-                               width=200, 
                                borderwidth=3,
                                relief='raised')
         self.frame.columnconfigure(0)
@@ -15,10 +13,10 @@ class SlideElement:
         self.frame.rowconfigure(1)
 
         self.ranking = ranking
-        self.rankingLabel = ttk.Label(self.frame, text="{} - ".format(self.ranking), justify='center', anchor='center', width=4)
+        self.rankingLabel = ttk.Label(self.frame, text="{} - ".format(self.ranking), width=4)
         self.rankingLabel.grid(column=0, row=0, rowspan=2)
 
-        self.name = ttk.Label(self.frame, text=name, justify='center', anchor='center', width=50)
+        self.name = ttk.Label(self.frame, text=name, width=40)
         self.name.grid(column=1, row=0, rowspan=2)
 
         self.up = ttk.Button(self.frame, text="go up", command= lambda *args: callbackUp(self), width=8)
