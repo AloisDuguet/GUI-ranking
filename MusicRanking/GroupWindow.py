@@ -30,8 +30,7 @@ class GroupWindow:
                                relief='raised')
         self.canvas = tk.Canvas(self.overallFrame,
                                 width=50,
-                                height=50,
-                                scrollregion=(0,0,20000,20000))
+                                height=50)
         
         # setup of horizontal scrollbar with the overall frame, scrolling the canvas
         self.scrollbar = ttk.Scrollbar(self.overallFrame, 
@@ -43,7 +42,7 @@ class GroupWindow:
         self.canvas.create_window(0, 0, window=self.frameWithElements, anchor=tk.N+tk.W)
         self.nSlideElements = len(nameList) # number of slideElements
         self.ranking = []
-        self.elementPerColumn = 6
+        self.elementPerColumn = 10
         self.slideElements = []
         for i in range(self.nSlideElements):
             self.slideElements.append(Element(self.frameWithElements, nameList[i], callbackButtonUp, callbackButtonDown, i+1))
@@ -60,6 +59,14 @@ class GroupWindow:
         self.canvas['xscrollcommand'] = self.scrollbar.set
         self.canvas.pack(fill=tk.BOTH, expand=True)
         self.overallFrame.pack(fill=tk.BOTH, expand=True)
+
+        # update size of canvas with size of frameWithElements
+        self.frameWithElements.update()
+        self.canvasHeight = self.frameWithElements.winfo_height()
+        self.canvasWidth = self.frameWithElements.winfo_width()
+        print("width of inner frame: {}".format(self.canvasWidth))
+        print("height of inner frame: {}".format(self.canvasHeight))
+        self.canvas.config(scrollregion=(0,0,self.canvasWidth,self.canvasHeight))
     
     def initElementsOnWindow(self, Element, callbackButtonUp, callbackButtonDown):
         if self.nSlideElements <= self.elementPerColumn:
@@ -85,7 +92,7 @@ class GroupWindow:
                 for indexRow in range(self.elementPerColumn):
                     indexElement = self.elementPerColumn*indexColumn+indexRow
                     if indexElement < self.nSlideElements:
-                        self.slideElements[indexElement].frame.grid(column=indexColumn, row=indexRow)
+                        self.slideElements[indexElement].frame.grid(column=indexColumn, row=indexRow, sticky="news")
             self.validRankingButton.grid(column=self.nColumnWithElements,row=0,sticky=tk.W+tk.E+tk.N+tk.S,rowspan=self.elementPerColumn)
 
     def disableButtons(self):
