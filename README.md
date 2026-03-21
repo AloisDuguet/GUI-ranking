@@ -1,12 +1,12 @@
-Welcome to GUI-ranking! 
+Welcome to GUI-ranking!
 
 Your passion is to rank musics/mangas/films/alphabet letters? Then you are in the right place.
 
-With a python installation (3.11 tested, but most 3.x should work), you will be able to rank your own list.
+With a python installation (3.11 tested, but most 3.x should work), you will be able to rank any list you can think of.
 
 
 
-Executing the python file CompetitionManager.py in folder musicRanking will open a window with instructions on:
+Executing the python file CompetitionManager.py in folder src will open a window with instructions on:
 
 * how to enter a list of competitors
 * how to set up your competition design among a few choices
@@ -15,9 +15,13 @@ Executing the python file CompetitionManager.py in folder musicRanking will open
 
 
 
-Sadly, the printing of the final ranking is not yet implemented.
+Sadly, the printing of the final ranking is not yet implemented. You will have to manually print it and hang it to your wall.
 
 
 
-If you have any ideas of improvement/comments/bugs, you can contact the developer at alois.duguet@free.fr or by any other mean. In particular, if you have a specific competition design that you would like to use I will be happy to implement it.
+If you have any ideas of improvement/comments/bugs, you can contact the developer at alois.duguet@free.fr or by any other mean. 
+
+
+
+In particular, if you have a specific competition design that you would like to use I am interested in implementing it. Also, please send me any list you want to share, I will add it to the folder listsToRank and others will be able to rank it.
 
