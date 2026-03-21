@@ -31,17 +31,16 @@ class GroupWindow:
         self.canvas = tk.Canvas(self.overallFrame,
                                 width=50,
                                 height=50,
-                                scrollregion=(0,0,2000,2000))
+                                scrollregion=(0,0,20000,20000))
         
         # setup of horizontal scrollbar with the overall frame, scrolling the canvas
         self.scrollbar = ttk.Scrollbar(self.overallFrame, 
-                                       orient=tk.HORIZONTAL, 
-                                       command=self.canvas.xview)
-        self.canvas['xscrollcommand'] = self.scrollbar.set
+                                       orient=tk.HORIZONTAL)
 
         # setup of the inner frame containing the slideElements inside the canvas
         self.frameWithElements = ttk.Frame(self.canvas,
                                relief='raised')
+        self.canvas.create_window(0, 0, window=self.frameWithElements, anchor=tk.N+tk.W)
         self.nSlideElements = len(nameList) # number of slideElements
         self.ranking = []
         self.elementPerColumn = 6
@@ -51,20 +50,21 @@ class GroupWindow:
         # add button validating current ranking
         self.validRankingButton = ttk.Button(self.frameWithElements, 
                                              text="validate ranking", 
-                                             command=self.validateRanking,
-                                             width=20)
+                                             command=self.validateRanking)
         self.initElementsOnWindow(Element, callbackButtonUp, callbackButtonDown)
         self.disableButtons()
         self.widgetStyles()
-        self.frameWithElements.pack()
+        #self.frameWithElements.pack(fill=tk.BOTH, expand=True, anchor=tk.N)
         self.scrollbar.pack(side=tk.TOP, fill=tk.X)
-        self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-        self.overallFrame.pack(fill=tk.Y, expand=False)
+        self.scrollbar.config(command=self.canvas.xview)
+        self.canvas['xscrollcommand'] = self.scrollbar.set
+        self.canvas.pack(fill=tk.BOTH, expand=True)
+        self.overallFrame.pack(fill=tk.BOTH, expand=True)
     
     def initElementsOnWindow(self, Element, callbackButtonUp, callbackButtonDown):
         if self.nSlideElements <= self.elementPerColumn:
-            self.frameWithElements.columnconfigure(0, weight=5)
-            self.frameWithElements.columnconfigure(1, weight=1)
+            self.frameWithElements.columnconfigure(0)
+            self.frameWithElements.columnconfigure(1)
             for i in range(self.nSlideElements):
                 self.frameWithElements.rowconfigure(i)
                 self.slideElements[i].frame.grid(column=0, row=i)
@@ -99,8 +99,6 @@ class GroupWindow:
         style.theme_use('alt')
         style.configure('TButton', background = 'grey', foreground = 'white')
         style.map('TButton', background=[('active','darkgrey')])
-        # change Label style
-        style.configure('TLabel', width = 40) # useful?
     
     def getGridPosition(self, position):
         indexColumn = int(position/self.elementPerColumn)
