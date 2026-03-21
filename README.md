@@ -2,11 +2,11 @@ Welcome to GUI-ranking!
 
 Your passion is to rank musics/mangas/films/alphabet letters? Then you are in the right place.
 
-With a `python` installation (3.11 tested, but most 3.x should work), you will be able to rank any list you can think of. A few examples of lists are in the folder \*listsToRank\*.
+With a `python` installation (3.11 tested, but most 3.x should work), you will be able to rank any list you can think of. A few examples of lists are in the folder \*\*listsToRank\*\*.
 
 
 
-Executing the python file \*CompetitionManager.py\* in folder \*src\* will open a window with instructions on:
+Executing the python file \*\*CompetitionManager.py\*\* in folder \*\*src\*\* will open a window with instructions on:
 
 1. how to enter a list of competitors
 
