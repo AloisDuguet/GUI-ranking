@@ -21,7 +21,6 @@ class SeasonStageManager(GroupStageManager):
             # no demotion allowed from worst group
             window.noDemotion()
         resSeason = window.classify()
-        window.frame.destroy()
         return resSeason
 
     def manageSeason(self):

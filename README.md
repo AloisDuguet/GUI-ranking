@@ -6,7 +6,7 @@ With a `python` installation (3.11 tested, but most 3.x should work), you will b
 
 
 
-Executing the python file CompetitionManager.py in folder src/ will open a window with instructions on:
+Executing the python file CompetitionManager.py in the folder src/ will open a window with instructions on:
 
 * how to enter a list of competitors
 * how to set up your competition design among a few choices
