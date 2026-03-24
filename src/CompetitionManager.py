@@ -98,7 +98,7 @@ class CompetitionManager:
         # create widgets of the grid
         self.stageProposals = []
         self.stageProposals.append(ttk.Label(self.frame, text="Do an initial group stage?"))
-        self.stageProposals.append(ttk.Label(self.frame, text="Do an multiple season promote/demote stage?"))
+        self.stageProposals.append(ttk.Label(self.frame, text="Do a multiple season promote/demote stage?"))
         self.stageProposals.append(ttk.Label(self.frame, text="Do a final one-group stage?"))
         self.buttons = []
         self.buttons.append(ttk.Button(self.frame, text="add stage", command= lambda *args: self.confirmStage(self.buttons[0])))
