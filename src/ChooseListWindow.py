@@ -14,7 +14,11 @@ class ChooseListWindow:
                                relief='raised')
         
         # explanation on top
-        explanationMessage = "Choose a list of competitors through one of the following means."
+        explanationMessage = "Choose a list of competitors through one of the following means.\n" \
+            "\t1) opening the content of a text file via button 'Open a file'\n" \
+            "\t2) typing one competitor per line in the rectangle of text\n" \
+            "\t3) a combination of the two, given that the content of a file is always added at the start of the text rectangle.\n" \
+            "When the list as displayed in the rectangle of text is done, click 'confirm list'."
         self.explanation = tk.Message(self.frame,
                                       text=explanationMessage, 
                                       width = 800, 
