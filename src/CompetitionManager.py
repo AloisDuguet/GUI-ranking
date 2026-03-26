@@ -7,6 +7,7 @@ from SeasonStageManager import *
 from FinalGroupStageManager import *
 from ResultWindow import *
 from ChooseListWindow import *
+from ListToRank import *
 from Helpers import *
 from Parsers import *
 
@@ -27,8 +28,10 @@ class CompetitionManager:
             #competitorsList = getListFromFolder(self.root)
             self.chooseListWindow = ChooseListWindow(self.root)
             competitorsList = self.chooseListWindow.chooseList()
-        self.participants = competitorsList
-        self.n = len(self.participants)
+        # for now, no name and criterion given to listToRank
+        self.listToRank = ListToRank(competitorsList, [], [])
+        self.listToRank.describe()
+        self.n = len(self.listToRank.competitors)
 
         self.doGroupStage = False
         self.doSeasonStage = False
@@ -183,28 +186,28 @@ class CompetitionManager:
         filename = inputPath("Enter filename to write the ranking", self.root)
         with open(filename, "w") as file:
             for i in range(self.n):
-                file.write(f"{i+1}: {self.participants[i]}\n")
+                file.write(f"{i+1}: {self.listToRank.competitors[i]}\n")
 
     def manageCompetition(self):
         if self.doGroupStage:
             manager = GroupStageManager(self.root,
-                                        self.participants, 
+                                        self.listToRank, 
                                         self.nGroupGroupStage)
-            self.participants = manager.manageCompetition()
+            self.listToRank.competitors = manager.manageCompetition()
         if self.doSeasonStage:
             manager = SeasonStageManager(self.root,
-                                         self.participants, 
+                                         self.listToRank, 
                                          self.nGroupSeasonStage, 
                                          self.nSeasons)
-            self.participants = manager.manageCompetition()
+            self.listToRank.competitors = manager.manageCompetition()
         if self.doFinalGroupStage:
             # one group to sort everything
             manager = FinalGroupStageManager(self.root,
-                                             self.participants)
-            self.participants = manager.manageCompetition()
+                                             self.listToRank)
+            self.listToRank.competitors = manager.manageCompetition()
         print("Final ranking of the competition:")
         GroupStageManager.printParticipants(self, with_ranking=True)
-        manager = ResultWindow(self.root, self.participants)
+        manager = ResultWindow(self.root, self.listToRank)
         manager.showResults()
         self.writeRanking()
 

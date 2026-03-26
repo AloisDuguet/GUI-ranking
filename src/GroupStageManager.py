@@ -8,10 +8,10 @@ from GroupWindow import *
 # a mother class AbstractStageManager with all common methods
 
 class GroupStageManager:
-    def __init__(self, root, participants, nGroups):
+    def __init__(self, root, listToRank, nGroups):
         self.root = root
-        self.participants = participants
-        self.n = len(self.participants)
+        self.listToRank = listToRank
+        self.n = len(self.listToRank.competitors)
         self.nGroups = nGroups
         self.groups = []
         for i in range(nGroups):
@@ -21,9 +21,9 @@ class GroupStageManager:
     def printParticipants(self, with_ranking=False):
         for i in range(self.n):
             if with_ranking:
-                print(f"{i+1}: {self.participants[i]}")
+                print(f"{i+1}: {self.listToRank.competitors[i]}")
             else:
-                print(self.participants[i])
+                print(self.listToRank.competitors[i])
     
     def printRanking(self):
         self.printParticipants(with_ranking=True)
@@ -31,9 +31,9 @@ class GroupStageManager:
     def makeUnequalLevelGroups(self):
         # make random groups with approximately
         # the same number of players
-        numpy.random.shuffle(self.participants)
+        numpy.random.shuffle(self.listToRank.competitors)
         indexGroup = 0
-        for el in self.participants:
+        for el in self.listToRank.competitors:
             self.groups[indexGroup].append(el)
             indexGroup = (indexGroup+1)%self.nGroups
         print("Groups built:")
@@ -49,7 +49,7 @@ class GroupStageManager:
             if indexGroup < biggerGroups:
                 bonus = 1
             for i in range(elementPerGroup+bonus):
-                self.groups[indexGroup].append(self.participants[cpt])
+                self.groups[indexGroup].append(self.listToRank.competitors[cpt])
                 cpt += 1
         print("Groups built:")
         self.printGroups()
@@ -81,24 +81,24 @@ class GroupStageManager:
         self.printGroups(with_ranking=True)
     
     def reorderParticipants(self):
-        # reorder participants in this way:
+        # reorder competitors in this way:
         # first the winner of each group
         # then second of each group
         # ...
         newOrder = []
-        # the first groups can have one more participant
+        # the first groups can have one more competitor
         for i in range(len(self.groups[0])):
             for group in self.groups:
                 if i < len(group):
                     newOrder.append(group[i])
-        self.participants = newOrder
+        self.listToRank.competitors = newOrder
         self.printRanking()
     
     def manageCompetition(self):
         self.makeUnequalLevelGroups()
         self.classifyGroups()
         self.reorderParticipants()
-        return self.participants
+        return self.listToRank.competitors
         
 
 

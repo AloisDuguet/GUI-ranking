@@ -2,13 +2,13 @@ from GroupStageManager import *
 from GroupWindow import *
 
 class FinalGroupStageManager(GroupStageManager):
-    def __init__(self, root, participants):
+    def __init__(self, root, listToRank):
         # there is only one group
-        GroupStageManager.__init__(self, root, participants, 1)
+        GroupStageManager.__init__(self, root, listToRank, 1)
     
     def manageCompetition(self):
         # there is only one group
-        self.groups[0] = self.participants
+        self.groups[0] = self.listToRank.competitors
         self.classifyGroups()
         self.reorderParticipants()
-        return self.participants
+        return self.listToRank.competitors

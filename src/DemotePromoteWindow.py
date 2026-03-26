@@ -2,13 +2,13 @@ from GroupWindow import *
 from DemotePromoteElement import *
 
 class DemotePromoteWindow(GroupWindow):
-    def __init__(self, root, nameList, nameGroup):
+    def __init__(self, root, listToRank, nameGroup):
         explanationMessage = "To promote a competitor to the immediately stronger division in the next season, click the corresponding 'promote' button.\n" \
             "To demote a competitor to the immediately weaker division in the next season, click the corresponding 'demote' button.\n" \
             "Multiple competitors can be demoted and promoted, so the number of competitors per group may vary.\n" \
             "In the strongest division, promotion is not possible. In the worst division, demotion is not possible. " \
             "When done, click the 'validate ranking' to confirm this ranking."
-        GroupWindow.init(self, root, nameList, nameGroup, explanationMessage, DemotePromoteElement, self.promote, self.demote)
+        GroupWindow.init(self, root, listToRank, nameGroup, explanationMessage, DemotePromoteElement, self.promote, self.demote)
         self.toBePromoted = []
         self.toBeDemoted = []
 
@@ -74,9 +74,3 @@ class DemotePromoteWindow(GroupWindow):
         ranking = GroupWindow.classify(self)
         return [self.toBeDemoted, self.slideElements, self.toBePromoted]
     
-
-if __name__ == "__main__":
-    # outdated
-    nameList = ["comme un boomerang", "la marseillaise", "grand pianola music"]
-    window = DemotePromoteWindow(nameList)
-    window.root.mainloop()

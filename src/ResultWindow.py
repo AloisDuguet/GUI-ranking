@@ -2,9 +2,9 @@ import tkinter as tk
 from tkinter import ttk
 
 class ResultWindow:
-    def __init__(self, root, participants):
+    def __init__(self, root, listToRank):
         self.root = root
-        self.participants = participants
+        self.listToRank = listToRank
         self.frame = ttk.Frame(self.root,
                                width=600,
                                height=600,
@@ -18,16 +18,16 @@ class ResultWindow:
 
         # setup text
         self.text = tk.Text(self.frame,
-                            height=len(self.participants))
+                            height=len(self.listToRank.competitors))
         self.text.pack()
 
-        # fill in participants with corresponding ranking
+        # fill in competitors with corresponding ranking
         self.elements = []
         self.rankings = []
-        for i in range(len(self.participants)):
+        for i in range(len(self.listToRank.competitors)):
             print("inserting one competitor at rank {} in position {}.0".format(i+1,i+1))
             self.text.insert(index='{}.0'.format(i+1),
-                             chars="{} - {}\n".format(i+1,self.participants[i]))
+                             chars="{} - {}\n".format(i+1,self.listToRank.competitors[i]))
         # disable editing to keep the ranking intact
         self.text['state'] = 'disabled'
 

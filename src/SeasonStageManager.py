@@ -6,8 +6,8 @@ from DemotePromoteWindow import *
 # can be promoted to the left and demoted to the right
 
 class SeasonStageManager(GroupStageManager):
-    def __init__(self, root, participants, nGroups, nSeasons):
-        GroupStageManager.__init__(self, root, participants, nGroups)
+    def __init__(self, root, listToRank, nGroups, nSeasons):
+        GroupStageManager.__init__(self, root, listToRank, nGroups)
         self.nSeasons = nSeasons
         self.currentSeason = 0
 
@@ -43,9 +43,9 @@ class SeasonStageManager(GroupStageManager):
 
     def reorderParticipants(self):
         # reorder them from first group to last group
-        self.participants = []
+        self.listToRank.competitors = []
         for group in self.groups:
-            self.participants.extend(group)
+            self.listToRank.competitors.extend(group)
         self.printRanking()
     
     def manageCompetition(self):
@@ -58,7 +58,7 @@ class SeasonStageManager(GroupStageManager):
             print(self.groups)
             self.printGroups()
         self.reorderParticipants()
-        return self.participants
+        return self.listToRank.competitors
         
 if __name__ == "__main__":
     nameList = ["comme un boomerang", "la marseillaise", "grand pianola music", "wor"]

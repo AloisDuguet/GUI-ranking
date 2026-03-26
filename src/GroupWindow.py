@@ -5,7 +5,7 @@ import math
 from SlideElement import *
 
 class GroupWindow:
-    def __init__(self, root, nameList, nameWindow):
+    def __init__(self, root, listToRank, nameWindow):
         explanationMessage = "Rank all competitors of this group.\n" \
             "Top position is the best position.\n" \
             "The button 'go up' exchanges the ranking of the corresponding competitor " \
@@ -15,9 +15,9 @@ class GroupWindow:
             "Thus, the current strongest competitor of the group can not go up " \
             "and the current worst competitor of the group can not go down.\n" \
             "When done, click the 'validate ranking' to confirm this ranking."
-        self.init(root, nameList, nameWindow, explanationMessage, SlideElement, self.goUp, self.goDown)
+        self.init(root, listToRank, nameWindow, explanationMessage, SlideElement, self.goUp, self.goDown)
 
-    def init(self, root, nameList, nameWindow, explanationMessage, Element, callbackButtonUp, callbackButtonDown):
+    def init(self, root, listToRank, nameWindow, explanationMessage, Element, callbackButtonUp, callbackButtonDown):
         self.root = root
         self.root.title(nameWindow)
 
@@ -40,12 +40,12 @@ class GroupWindow:
         self.frameWithElements = ttk.Frame(self.canvas,
                                relief='raised')
         self.canvas.create_window(0, 0, window=self.frameWithElements, anchor=tk.N+tk.W)
-        self.nSlideElements = len(nameList) # number of slideElements
+        self.nSlideElements = len(listToRank.competitors) # number of slideElements
         self.ranking = []
         self.elementPerColumn = 10
         self.slideElements = []
         for i in range(self.nSlideElements):
-            self.slideElements.append(Element(self.frameWithElements, nameList[i], callbackButtonUp, callbackButtonDown, i+1))
+            self.slideElements.append(Element(self.frameWithElements, listToRank.competitors[i], callbackButtonUp, callbackButtonDown, i+1))
         # add button validating current ranking
         self.validRankingButton = ttk.Button(self.frameWithElements, 
                                              text="validate ranking", 
@@ -181,10 +181,3 @@ class GroupWindow:
         self.explanation.destroy()
         self.overallFrame.destroy()
         return self.ranking
-
-
-if __name__ == "__main__":
-    # outdated
-    nameList = ["comme un boomerang", "la marseillaise", "grand pianola music"]
-    window = GroupWindow(nameList)
-    window.root.mainloop()
