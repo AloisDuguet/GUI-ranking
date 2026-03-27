@@ -5,7 +5,7 @@ import math
 from SlideElement import *
 
 class GroupWindow:
-    def __init__(self, root, competitors, nameWindow):
+    def __init__(self, root, competitors, nameWindow, listToRank):
         explanationMessage = "Rank all competitors of this group.\n" \
             "Top position is the best position.\n" \
             "The button 'go up' exchanges the ranking of the corresponding competitor " \
@@ -15,15 +15,31 @@ class GroupWindow:
             "Thus, the current strongest competitor of the group can not go up " \
             "and the current worst competitor of the group can not go down.\n" \
             "When done, click the 'validate ranking' to confirm this ranking."
-        self.init(root, competitors, nameWindow, explanationMessage, SlideElement, self.goUp, self.goDown)
+        self.init(root, competitors, nameWindow, explanationMessage, SlideElement, self.goUp, self.goDown, listToRank)
 
-    def init(self, root, competitors, nameWindow, explanationMessage, Element, callbackButtonUp, callbackButtonDown):
+    def init(self, root, competitors, nameWindow, explanationMessage, Element, callbackButtonUp, callbackButtonDown, listToRank):
+        self.listToRank = listToRank
+
         self.root = root
         self.root.title(nameWindow)
 
+        self.upperFrame = ttk.Frame(self.root, 
+                                    relief='raised')
+        self.upperFrame.pack()
+
         # display explanationMessage as the first element of the window
-        self.explanation = tk.Message(self.root, text=explanationMessage, width = 800, font=(tk.font.nametofont("TkTextFont").actual()["family"],10))
+        self.explanation = tk.Message(self.upperFrame, text=explanationMessage, width = 800, font=(tk.font.nametofont("TkTextFont").actual()["family"],10))
         self.explanation.pack()
+
+        # separate with a horizontal line
+        self.separator = ttk.Separator(self.upperFrame, orient='horizontal')
+        self.separator.pack(fill='x', padx=200, pady=10)
+
+        # write criterion for ranking if any
+        if self.listToRank.criterion != "":
+            self.criterionLabel = ttk.Label(self.upperFrame,
+                                            text=self.listToRank.criterion)
+            self.criterionLabel.pack()
 
         # setup of canvas inside overall frame
         self.overallFrame = ttk.Frame(self.root,
@@ -38,8 +54,12 @@ class GroupWindow:
 
         # setup of the inner frame containing the slideElements inside the canvas
         self.frameWithElements = ttk.Frame(self.canvas,
-                               relief='raised')
-        self.canvas.create_window(0, 0, window=self.frameWithElements, anchor=tk.N+tk.W)
+                                relief='raised')
+        x0 = self.frameWithElements.winfo_screenwidth()/2
+        self.canvas.create_window(x0, 
+                                  0, 
+                                  window=self.frameWithElements, 
+                                  anchor='n')
         self.nSlideElements = len(competitors) # number of slideElements
         self.ranking = []
         self.elementPerColumn = 10
@@ -83,7 +103,7 @@ class GroupWindow:
             for i in range(self.nSlideElements):
                 self.frameWithElements.rowconfigure(i)
                 self.slideElements[i].frame.grid(column=0, row=i, sticky='news')
-            self.validRankingButton.grid(column=1,row=0,sticky='news',rowspan=self.nSlideElements)
+            self.validRankingButton.grid(column=1,row=0,sticky='news',rowspan=max(self.nSlideElements,1))
         else:
             self.nColumnWithElements = int(math.ceil(self.nSlideElements/self.elementPerColumn))
             # build columns
@@ -178,6 +198,6 @@ class GroupWindow:
 
     def classify(self):
         self.root.mainloop()
-        self.explanation.destroy()
+        self.upperFrame.destroy()
         self.overallFrame.destroy()
         return self.ranking

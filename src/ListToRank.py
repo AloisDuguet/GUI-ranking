@@ -1,7 +1,7 @@
 class ListToRank:
     """A class to describe the list of competitors, the name of this ranking,
     and the criterion with which to rank the competitors"""
-    def __init__(self, competitors = [], name = [], criterion = []):
+    def __init__(self, competitors = [], name = "", criterion = "What do you prefer?"):
         self.competitors = competitors
         self.name = name
         self.criterion = criterion

@@ -5,6 +5,7 @@ from tkinter import filedialog as fd
 
 from Helpers import *
 from Parsers import *
+from ListToRank import *
 
 class ChooseListWindow:
     def __init__(self, root):
@@ -14,16 +15,26 @@ class ChooseListWindow:
                                relief='raised')
         
         # explanation on top
-        explanationMessage = "Choose a list of competitors through one of the following means.\n" \
+        criterionExplanation = "criterion for the ranking:"
+        explanationMessage = "Choose a criterion for the ranking in the zone after '{}'; the default is 'what do you prefer?'. " \
+            "Then, choose a list of competitors through one of the following means.\n" \
             "\t1) opening the content of a text file via button 'Open a file'\n" \
             "\t2) typing one competitor per line in the rectangle of text\n" \
-            "\t3) a combination of the two, given that the content of a file is always added at the start of the text rectangle.\n" \
-            "When the list as displayed in the rectangle of text is done, click 'confirm list'."
+            "\t3) a combination of the two, given that the content of a file is always added at the start of the rectangle of text.\n" \
+            "When the list as displayed in the rectangle of text is done, click 'confirm list'.".format(criterionExplanation)
         self.explanation = tk.Message(self.frame,
                                       text=explanationMessage, 
                                       width = 800, 
                                       font=(tk.font.nametofont("TkTextFont").actual()["family"],10))
         self.explanation.pack()
+
+        # criterion Label and Text
+        self.labelCriterion = ttk.Label(self.frame,
+                                        text=criterionExplanation)
+        self.labelCriterion.pack()
+        self.textCriterion = tk.Text(self.frame, height=1)
+        self.textCriterion.pack()
+        self.textCriterion.focus_set()
 
         # get list from a file
         self.labelFile = ttk.Label(self.frame,
@@ -44,7 +55,7 @@ class ChooseListWindow:
         # button to confirm list
         self.confirmButton = ttk.Button(self.frame,
                                         text="confirm list",
-                                        command=self.getList)
+                                        command=self.getListToRank)
         self.confirmButton.pack()
 
     def openFileIntoTextWidget(self):
@@ -59,7 +70,9 @@ class ChooseListWindow:
             self.text.insert('{}.0'.format(lineNumber),"{}\n".format(l))
         #self.text.insert('1.0', f.readlines())
 
-    def getList(self):
+    def getListToRank(self):
+        # get criterion from Text widget
+        self.stringCriterion = self.textCriterion.get('1.0', tk.END)
         # get list from Text widget
         self.stringList = self.text.get('1.0', tk.END)
         rawList = self.stringList.split('\n')
@@ -79,4 +92,4 @@ class ChooseListWindow:
         self.frame.pack()
         self.root.mainloop()
         self.frame.destroy()
-        return self.list
+        return ListToRank(self.list, "", self.stringCriterion)
