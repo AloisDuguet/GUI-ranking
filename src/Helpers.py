@@ -51,7 +51,7 @@ def selectFile():
     )
     filename = fd.askopenfilename(
         title='open a file',
-        initialdir='/',
+        initialdir='/../listsToRank',
         filetypes=filetypes)
     showinfo(title='Selected file',
              message=filename)
@@ -64,7 +64,7 @@ def openTextFile():
     )
     f = fd.askopenfile(
         title='open a file',
-        initialdir='/',
+        initialdir='/../listsToRank',
         filetypes=filetypes)
     return f
     
