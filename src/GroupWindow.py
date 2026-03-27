@@ -55,14 +55,10 @@ class GroupWindow:
         # setup of the inner frame containing the slideElements inside the canvas
         self.frameWithElements = ttk.Frame(self.canvas,
                                 relief='raised')
-        x0 = self.frameWithElements.winfo_screenwidth()/2
-        self.canvas.create_window(x0, 
-                                  0, 
-                                  window=self.frameWithElements, 
-                                  anchor='n')
+        
         self.nSlideElements = len(competitors) # number of slideElements
         self.ranking = []
-        self.elementPerColumn = 10
+        self.elementPerColumn = 3
         self.slideElements = []
         for i in range(self.nSlideElements):
             self.slideElements.append(Element(self.frameWithElements, competitors[i], callbackButtonUp, callbackButtonDown, i+1))
@@ -73,15 +69,27 @@ class GroupWindow:
         self.initElementsOnWindow(Element, callbackButtonUp, callbackButtonDown)
         self.disableButtons()
         self.widgetStyles()
-        #self.frameWithElements.pack(fill=tk.BOTH, expand=True, anchor=tk.N)
+        
         self.scrollbar.pack(side=tk.TOP, fill=tk.X)
         self.scrollbar.config(command=self.canvas.xview)
         self.canvas['xscrollcommand'] = self.scrollbar.set
         self.canvas.pack(fill=tk.BOTH, expand=True)
         self.overallFrame.pack(fill=tk.BOTH, expand=True)
 
+        # compute correct position for frame in canvas
+        # creation of window inside canvas;
+        self.canvas.create_window(0, 0, window=self.frameWithElements)
+
         # update size of canvas with size of frameWithElements
         self.updateScrollbarSize()
+
+        screenWidth = self.root.winfo_screenwidth()
+        frameWidth = self.frameWithElements.winfo_width()
+        print("screen width: {}\nframe width: {}".format(screenWidth, frameWidth))
+        self.canvas.create_window(max(0,screenWidth/2-frameWidth/2), 
+                                0, 
+                                window=self.frameWithElements, 
+                                anchor='nw')
 
     def updateScrollbarSize(self):
         # update frame inside to get the right size
