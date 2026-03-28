@@ -16,7 +16,6 @@ class GroupStageManager:
         self.groups = []
         for i in range(nGroups):
             self.groups.append([])
-        self.filename = ""
     
     def printParticipants(self, with_ranking=False):
         for i in range(self.n):
