@@ -8,9 +8,11 @@ class DemotePromoteWindow(GroupWindow):
             "Multiple competitors can be demoted and promoted, so the number of competitors per group may vary.\n" \
             "In the strongest division, promotion is not possible. In the worst division, demotion is not possible. " \
             "When done, click the 'validate ranking' to confirm this ranking."
-        GroupWindow.init(self, root, competitors, nameGroup, explanationMessage, DemotePromoteElement, self.promote, self.demote, listToRank)
         self.toBePromoted = []
         self.toBeDemoted = []
+
+        self.initUpperFrame(root, nameGroup, explanationMessage, listToRank)
+        self.initLowerFrame(root, competitors, DemotePromoteElement, self.promote, self.demote)
 
     def widgetStyles(self):
         GroupWindow.widgetStyles(self)

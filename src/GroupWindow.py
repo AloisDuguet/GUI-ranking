@@ -15,9 +15,10 @@ class GroupWindow:
             "Thus, the current strongest competitor of the group can not go up " \
             "and the current worst competitor of the group can not go down.\n" \
             "When done, click the 'validate ranking' to confirm this ranking."
-        self.init(root, competitors, nameWindow, explanationMessage, SlideElement, self.goUp, self.goDown, listToRank)
+        self.initUpperFrame(root, nameWindow, explanationMessage, listToRank)
+        self.initLowerFrame(root, competitors, SlideElement, self.goUp, self.goDown)
 
-    def init(self, root, competitors, nameWindow, explanationMessage, Element, callbackButtonUp, callbackButtonDown, listToRank):
+    def initUpperFrame(self, root, nameWindow, explanationMessage, listToRank):
         self.listToRank = listToRank
 
         self.root = root
@@ -41,6 +42,7 @@ class GroupWindow:
                                             text=self.listToRank.criterion)
             self.criterionLabel.pack()
 
+    def initLowerFrame(self, root, competitors, Element, callbackButtonUp, callbackButtonDown):
         # setup of canvas inside overall frame
         self.overallFrame = ttk.Frame(self.root,
                                relief='raised')
