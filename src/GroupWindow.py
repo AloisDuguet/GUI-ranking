@@ -68,7 +68,7 @@ class GroupWindow:
         self.validRankingButton = ttk.Button(self.frameWithElements, 
                                              text="validate ranking", 
                                              command=self.validateRanking)
-        self.initElementsOnWindow(Element, callbackButtonUp, callbackButtonDown)
+        self.initElementsOnWindow()
         self.disableButtons()
         self.widgetStyles()
         
@@ -106,7 +106,7 @@ class GroupWindow:
         # resize the scrollable region
         self.canvas.config(scrollregion=(0,0,self.canvasWidth,self.canvasHeight))
     
-    def initElementsOnWindow(self, Element, callbackButtonUp, callbackButtonDown):
+    def initElementsOnWindow(self):
         if self.nSlideElements <= self.elementPerColumn:
             self.frameWithElements.columnconfigure(0)
             self.frameWithElements.columnconfigure(1)
