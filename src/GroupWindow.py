@@ -44,14 +44,14 @@ class GroupWindow:
 
     def initLowerFrame(self, root, competitors, Element, callbackButtonUp, callbackButtonDown):
         # setup of canvas inside overall frame
-        self.overallFrame = ttk.Frame(self.root,
+        self.lowerFrame = ttk.Frame(self.root,
                                relief='raised')
-        self.canvas = tk.Canvas(self.overallFrame,
+        self.canvas = tk.Canvas(self.lowerFrame,
                                 width=50,
                                 height=50)
         
         # setup of horizontal scrollbar with the overall frame, scrolling the canvas
-        self.scrollbar = ttk.Scrollbar(self.overallFrame, 
+        self.scrollbar = ttk.Scrollbar(self.lowerFrame, 
                                        orient=tk.HORIZONTAL)
 
         # setup of the inner frame containing the slideElements inside the canvas
@@ -76,7 +76,7 @@ class GroupWindow:
         self.scrollbar.config(command=self.canvas.xview)
         self.canvas['xscrollcommand'] = self.scrollbar.set
         self.canvas.pack(fill=tk.BOTH, expand=True)
-        self.overallFrame.pack(fill=tk.BOTH, expand=True)
+        self.lowerFrame.pack(fill=tk.BOTH, expand=True)
 
         # compute correct position for frame in canvas
         # creation of window inside canvas;
@@ -209,5 +209,5 @@ class GroupWindow:
     def classify(self):
         self.root.mainloop()
         self.upperFrame.destroy()
-        self.overallFrame.destroy()
+        self.lowerFrame.destroy()
         return self.ranking
