@@ -1,6 +1,7 @@
 import os
 import tkinter as tk
 from tkinter import font
+import numpy.random
 
 from GroupStageManager import *
 from SeasonStageManager import *
@@ -30,6 +31,7 @@ class CompetitionManager:
             #competitorsList = getListFromFolder(self.root)
             self.chooseListWindow = ChooseListWindow(self.root)
             self.listToRank = self.chooseListWindow.chooseList()
+            numpy.random.shuffle(self.listToRank.competitors)
         # for now, no name and criterion given to listToRank
         self.listToRank.describe()
         self.n = len(self.listToRank.competitors)
