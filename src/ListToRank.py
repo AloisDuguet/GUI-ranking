@@ -9,7 +9,12 @@ class ListToRank:
         self.criterion = criterion
         self.ranking = dict()
 
-    def produceKey(self, lowerValue, upperValue):
+    def resetRanking(self):
+        self.ranking = dict()
+
+    def produceKey(self, lowerValue, upperValue = "UNK"):
+        if upperValue == "UNK":
+            upperValue = lowerValue
         if lowerValue != math.floor(lowerValue):
             raise("trying to produce a ranking with " \
                   "a float rank")
@@ -51,7 +56,7 @@ class ListToRank:
                 rankingString += f"{key}: {value}\n"
         return rankingString
 
-    def printRanking(self, toTextWidget = False):
+    def printRanking(self):
         orderedKeys = self.orderRankingKeys()
         # print values of each key in increasing order
         for key in orderedKeys:

@@ -13,15 +13,16 @@ class SeasonStageManager(GroupStageManager):
 
     def classifyGroup(self, i):
         nameGroup = f"Season {self.currentSeason} / {self.nSeasons} of Season Stage: Division {i+1} / {self.nGroups}"
-        window = DemotePromoteWindow(self.root, self.groups[i], nameGroup, self.listToRank)
+        groupToRank = ListToRank(self.groups[i], "", self.listToRank.criterion)
+        window = DemotePromoteWindow(self.root, groupToRank, nameGroup)
         if i == 0:
             # no promotion allowed from best group
             window.noPromotion()
         if i == self.nGroups-1:
             # no demotion allowed from worst group
             window.noDemotion()
-        resSeason = window.classify()
-        return resSeason
+        resSeasonForGroup = window.classify()
+        return resSeasonForGroup
 
     def manageSeason(self):
         resSeason = []
@@ -43,22 +44,26 @@ class SeasonStageManager(GroupStageManager):
 
     def reorderParticipants(self):
         # reorder them from first group to last group
-        self.listToRank.competitors = []
+        self.listToRank.resetRanking()
+        rankCounter = 1
         for group in self.groups:
-            self.listToRank.competitors.extend(group)
-        self.printRanking()
+            for competitor in group:
+                key = self.listToRank.produceKey(rankCounter)
+                self.listToRank.ranking[key] = competitor
+                rankCounter += 1
+        self.listToRank.fillCompetitorsFromRanking()
+        self.listToRank.printRanking()
     
     def manageCompetition(self):
         self.makeEqualLevelGroups()
-        print(f"")
         for indexSeason in range(self.nSeasons):
             self.currentSeason += 1
             self.manageSeason()
-            print(f"Groups at the end of season {indexSeason+1}")
+            print(f"Groups at the end of season {self.currentSeason}")
             print(self.groups)
             self.printGroups()
         self.reorderParticipants()
-        return self.listToRank.competitors
+        return self.listToRank
         
 if __name__ == "__main__":
     nameList = ["comme un boomerang", "la marseillaise", "grand pianola music", "wor"]

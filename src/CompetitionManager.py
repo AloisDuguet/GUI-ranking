@@ -211,13 +211,13 @@ class CompetitionManager:
             manager = GroupStageManager(self.root,
                                         self.listToRank, 
                                         self.nGroupGroupStage)
-            self.listToRank.competitors = manager.manageCompetition()
+            self.listToRank = manager.manageCompetition()
         if self.doSeasonStage:
             manager = SeasonStageManager(self.root,
                                          self.listToRank, 
                                          self.nGroupSeasonStage, 
                                          self.nSeasons)
-            self.listToRank.competitors = manager.manageCompetition()
+            self.listToRank = manager.manageCompetition()
         if self.doFinalGroupStage:
             # one group to sort everything
             manager = FinalGroupStageManager(self.root,

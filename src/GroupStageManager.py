@@ -3,6 +3,7 @@ from tkinter import ttk
 import numpy.random
 
 from GroupWindow import *
+from ListToRank import *
 
 # when other stage managers will be coded, create 
 # a mother class AbstractStageManager with all common methods
@@ -70,8 +71,10 @@ class GroupStageManager:
 
     def classifyGroup(self, i):
         nameGroup = f"Group Stage: group {i+1} / {self.nGroups}"
-        window = GroupWindow(self.root, self.groups[i], nameGroup, self.listToRank)
-        self.groups[i] = window.classify()
+        groupToRank = ListToRank(self.groups[i], "", self.listToRank.criterion)
+        window = GroupWindow(self.root, groupToRank, nameGroup)
+        groupToRank = window.classify()
+        self.groups[i] = groupToRank.fillCompetitorsFromRanking()
 
     def classifyGroups(self):
         for i in range(self.nGroups):
@@ -84,20 +87,22 @@ class GroupStageManager:
         # first the winner of each group
         # then second of each group
         # ...
-        newOrder = []
         # the first groups can have one more competitor
+        rankCounter = 1
         for i in range(len(self.groups[0])):
             for group in self.groups:
                 if i < len(group):
-                    newOrder.append(group[i])
-        self.listToRank.competitors = newOrder
-        self.printRanking()
+                    key = self.listToRank.produceKey(rankCounter)
+                    self.listToRank.ranking[key] = group[i]
+                    rankCounter += 1
+        self.listToRank.fillCompetitorsFromRanking()
+        self.listToRank.printRanking()
     
     def manageCompetition(self):
         self.makeUnequalLevelGroups()
         self.classifyGroups()
         self.reorderParticipants()
-        return self.listToRank.competitors
+        return self.listToRank
         
 
 

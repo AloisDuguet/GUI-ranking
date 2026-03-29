@@ -5,7 +5,8 @@ import math
 from SlideElement import *
 
 class GroupWindow:
-    def __init__(self, root, competitors, nameWindow, listToRank):
+    def __init__(self, root, listToRank, nameWindow):
+        self.listToRank = listToRank
         explanationMessage = "Rank all competitors of this group.\n" \
             "Top position is the best position.\n" \
             "The button 'go up' exchanges the ranking of the corresponding competitor " \
@@ -15,11 +16,10 @@ class GroupWindow:
             "Thus, the current strongest competitor of the group can not go up " \
             "and the current worst competitor of the group can not go down.\n" \
             "When done, click the 'validate ranking' to confirm this ranking."
-        self.initUpperFrame(root, nameWindow, explanationMessage, listToRank)
-        self.initLowerFrame(root, competitors, SlideElement, self.goUp, self.goDown)
+        self.initUpperFrame(root, nameWindow, explanationMessage)
+        self.initLowerFrame(root, SlideElement, self.goUp, self.goDown)
 
-    def initUpperFrame(self, root, nameWindow, explanationMessage, listToRank):
-        self.listToRank = listToRank
+    def initUpperFrame(self, root, nameWindow, explanationMessage):
 
         self.root = root
         self.root.title(nameWindow)
@@ -42,7 +42,7 @@ class GroupWindow:
                                             text=self.listToRank.criterion)
             self.criterionLabel.pack()
 
-    def initLowerFrame(self, root, competitors, Element, callbackButtonUp, callbackButtonDown):
+    def initLowerFrame(self, root, Element, callbackButtonUp, callbackButtonDown):
         # setup of canvas inside overall frame
         self.lowerFrame = ttk.Frame(self.root,
                                relief='raised')
@@ -58,12 +58,17 @@ class GroupWindow:
         self.frameWithElements = ttk.Frame(self.canvas,
                                 relief='raised')
         
-        self.nSlideElements = len(competitors) # number of slideElements
+        self.nSlideElements = len(self.listToRank.competitors)
         self.ranking = []
         self.elementPerColumn = 3
         self.slideElements = []
         for i in range(self.nSlideElements):
-            self.slideElements.append(Element(self.frameWithElements, competitors[i], callbackButtonUp, callbackButtonDown, i+1))
+            self.slideElements.append(Element(self.frameWithElements, 
+                                              self.listToRank.competitors[i], 
+                                              callbackButtonUp, 
+                                              callbackButtonDown, 
+                                              i+1))
+        
         # add button validating current ranking
         self.validRankingButton = ttk.Button(self.frameWithElements, 
                                              text="validate ranking", 
@@ -87,7 +92,7 @@ class GroupWindow:
 
         screenWidth = self.root.winfo_screenwidth()
         frameWidth = self.frameWithElements.winfo_width()
-        print("screen width: {}\nframe width: {}".format(screenWidth, frameWidth))
+        print(f"screen width: {screenWidth}\nframe width: {frameWidth}")
         self.canvas.create_window(max(0,screenWidth/2-frameWidth/2), 
                                 0, 
                                 window=self.frameWithElements, 
@@ -202,12 +207,12 @@ class GroupWindow:
         
     def validateRanking(self):
         for i in range(self.nSlideElements):
-            self.ranking.append(self.slideElements[i].getName())
-            print(f"{i+1}: {self.ranking[-1]}")
+            self.listToRank.ranking[f"{i}"] = self.slideElements[i].getName()
+        self.listToRank.printRanking()
         self.root.quit()
 
     def classify(self):
         self.root.mainloop()
         self.upperFrame.destroy()
         self.lowerFrame.destroy()
-        return self.ranking
+        return self.listToRank
