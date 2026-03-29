@@ -40,15 +40,24 @@ class MatchWindow(GroupWindow):
             self.loser = self.competitors[0]
         self.root.quit()
     
-    def initElementsOnWindow(self):
+    def initElementsOnWindow(self, ratioFullX=0.7, ratioFullY=0.2, centerY=0.4):
         # we assume there will be less than 10 competitors
         if self.nElements > 10:
             raise("scroll bar needs to be implemented " \
             "because the lowerFrame does not fit the screen")
-        self.lowerFrame.columnconfigure(0)
+        
+        # tailored to two competitors for now
+        relwidth=0.3
+        relheight=0.2
+        relxs = [0.16,0.54] # 2/5th of empty space on the outside
         for i in range(self.nElements):
-            self.lowerFrame.rowconfigure(i)
-            self.elements[i].frame.grid(column=0, row=i, sticky='news')
+            relx = relxs[i]
+            rely = 0.2 # center y around 0.3
+            self.elements[i].frame.place(anchor='nw',
+                                         relwidth=relwidth,
+                                         relheight=relheight,
+                                         relx=relx,
+                                         rely=rely)
     
     def classify(self):
         self.root.mainloop()
