@@ -58,9 +58,9 @@ class DirectEliminationStageManager:
         if self.numberQualified == 1:
             return f"Direct elimination stage: final"
         elif self.numberQualified == 2:
-            return f"Direct elimination stage: semifinal, match {i+1} / {self.numberOfMatches}"
+            return f"Direct elimination stage: semifinal, match {matchNumber+1} / {self.numberOfMatches}"
         else:
-            return f"Direct elimination stage: 1/{self.numberQualified}-th of final, match {i+1} / {self.numberOfMatches}"
+            return f"Direct elimination stage: 1/{self.numberQualified}-th of final, match {matchNumber+1} / {self.numberOfMatches}"
 
     def manageOneMatch(self, key, i):
         competitors = [self.modifiedFIFO.pop(0)]
