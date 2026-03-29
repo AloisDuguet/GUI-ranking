@@ -205,14 +205,8 @@ class CompetitionManager:
             self.buttons[0].config(style="TButton")
             self.buttons[1].config(style="TButton")
             self.buttons[2].config(style="TButton")
-    
-    def writeRanking(self):
-        filename = inputPath("Enter filename to write the ranking", self.root)
-        with open(filename, "w") as file:
-            for i in range(self.n):
-                file.write(f"{i+1}: {self.listToRank.competitors[i]}\n")
 
-    def manageCompetition(self):
+    def playStages(self):
         if self.doGroupStage:
             manager = GroupStageManager(self.root,
                                         self.listToRank, 
@@ -233,10 +227,22 @@ class CompetitionManager:
             manager = DirectEliminationStageManager(self.root,
                                              self.listToRank)
             self.listToRank = manager.manageCompetition()
+
+    def showRanking(self):
         print("Final ranking of the competition:")
-        GroupStageManager.printParticipants(self, with_ranking=True)
+        self.listToRank.printRanking()
         manager = ResultWindow(self.root, self.listToRank)
         manager.showResults()
+    
+    def writeRanking(self):
+        filename = inputPath("Enter filename to write the ranking", self.root)
+        with open(filename, "w") as file:
+            stringRanking = self.listToRank.produceStringRanking()
+            file.write(stringRanking)
+
+    def manageCompetition(self):
+        self.playStages()
+        self.showRanking()
         self.writeRanking()
 
 def main():

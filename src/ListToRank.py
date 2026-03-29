@@ -40,8 +40,18 @@ class ListToRank:
         for key in listKeys:
             orderedKeys.append(tempDict[key])
         return orderedKeys
+    
+    def produceStringRanking(self):
+        orderedKeys = self.orderRankingKeys()
+        # print values of each key in increasing order
+        rankingString = ""
+        for key in orderedKeys:
+            values = self.ranking[key]
+            for value in values:
+                rankingString += f"{key}: {value}\n"
+        return rankingString
 
-    def printRanking(self):
+    def printRanking(self, toTextWidget = False):
         orderedKeys = self.orderRankingKeys()
         # print values of each key in increasing order
         for key in orderedKeys:
