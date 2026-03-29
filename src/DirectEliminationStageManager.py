@@ -2,6 +2,7 @@ import numpy.random
 import math
 
 from MatchWindow import *
+from ListToRank import *
 
 class DirectEliminationStageManager:
     def __init__(self, root, listToRank):
@@ -26,7 +27,8 @@ class DirectEliminationStageManager:
         competitors = [self.modifiedFIFO.pop(0)]
         competitors.append(self.modifiedFIFO.pop(0))
         nameWindow = self.getTitleWindow(i)
-        window = MatchWindow(self.root, competitors, nameWindow, self.listToRank)
+        groupToRank = ListToRank(competitors, "", self.listToRank.criterion)
+        window = MatchWindow(self.root, groupToRank, nameWindow)
         winner,loser = window.classify()
         print(f"{winner} won against {loser}")
         self.modifiedFIFO.append(winner)
