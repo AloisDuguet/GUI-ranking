@@ -222,7 +222,7 @@ class CompetitionManager:
             # one group to sort everything
             manager = FinalGroupStageManager(self.root,
                                              self.listToRank)
-            self.listToRank.competitors = manager.manageCompetition()
+            self.listToRank = manager.manageCompetition()
         if self.doDirectEliminationStage:
             manager = DirectEliminationStageManager(self.root,
                                              self.listToRank)

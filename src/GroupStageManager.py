@@ -18,16 +18,6 @@ class GroupStageManager:
         for i in range(nGroups):
             self.groups.append([])
     
-    def printParticipants(self, with_ranking=False):
-        for i in range(self.n):
-            if with_ranking:
-                print(f"{i+1}: {self.listToRank.competitors[i]}")
-            else:
-                print(self.listToRank.competitors[i])
-    
-    def printRanking(self):
-        self.printParticipants(with_ranking=True)
-
     def makeUnequalLevelGroups(self):
         # make random groups with approximately
         # the same number of players
@@ -64,17 +54,15 @@ class GroupStageManager:
     def printGroups(self, with_ranking=False):
         for i in range(self.nGroups):
             print(f"group {i}:")
-            if with_ranking:
-                self.printGroup(i, with_ranking=True)
-            else:
-                self.printGroup(i)
+            self.printGroup(i, with_ranking=with_ranking)
 
     def classifyGroup(self, i):
         nameGroup = f"Group Stage: group {i+1} / {self.nGroups}"
         groupToRank = ListToRank(self.groups[i], "", self.listToRank.criterion)
         window = GroupWindow(self.root, groupToRank, nameGroup)
         groupToRank = window.classify()
-        self.groups[i] = groupToRank.fillCompetitorsFromRanking()
+        groupToRank.fillCompetitorsFromRanking()
+        self.groups[i] = groupToRank.competitors
 
     def classifyGroups(self):
         for i in range(self.nGroups):
@@ -93,7 +81,7 @@ class GroupStageManager:
             for group in self.groups:
                 if i < len(group):
                     key = self.listToRank.produceKey(rankCounter)
-                    self.listToRank.ranking[key] = group[i]
+                    self.listToRank.ranking[key] = [group[i]]
                     rankCounter += 1
         self.listToRank.fillCompetitorsFromRanking()
         self.listToRank.printRanking()

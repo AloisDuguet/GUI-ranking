@@ -49,7 +49,7 @@ class SeasonStageManager(GroupStageManager):
         for group in self.groups:
             for competitor in group:
                 key = self.listToRank.produceKey(rankCounter)
-                self.listToRank.ranking[key] = competitor
+                self.listToRank.ranking[key] = [competitor]
                 rankCounter += 1
         self.listToRank.fillCompetitorsFromRanking()
         self.listToRank.printRanking()

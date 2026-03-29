@@ -11,4 +11,4 @@ class FinalGroupStageManager(GroupStageManager):
         self.groups[0] = self.listToRank.competitors
         self.classifyGroups()
         self.reorderParticipants()
-        return self.listToRank.competitors
+        return self.listToRank

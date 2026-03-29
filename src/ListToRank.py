@@ -57,17 +57,20 @@ class ListToRank:
         return rankingString
 
     def printRanking(self):
-        orderedKeys = self.orderRankingKeys()
-        # print values of each key in increasing order
-        for key in orderedKeys:
-            values = self.ranking[key]
-            for value in values:
-                print(f"{key}: {value}")
+        if len(self.ranking.keys()) == 0:
+            print("No ranking")
+        else:
+            orderedKeys = self.orderRankingKeys()
+            # print values of each key in increasing order
+            for key in orderedKeys:
+                values = self.ranking[key]
+                for value in values:
+                    print(f"{key}: {value}")
     
     def fillRankingFromCompetitors(self):
         # fill in ranking from order of self.competitors
         for i,competitor in enumerate(self.competitors):
-            self.ranking[f"{i}"] = competitor
+            self.ranking[f"{i}"] = [competitor]
     
     def fillCompetitorsFromRanking(self):
         # fill in competitors from ranking, in ranking order (best to worst)
@@ -75,8 +78,13 @@ class ListToRank:
         orderedKeys = self.orderRankingKeys()
         for key in orderedKeys:
             values = self.ranking[key]
-            for value in values:
-                self.competitors.append(value)
+            if type(values) == list:
+                for value in values:
+                    self.competitors.append(value)
+            elif type(values) == str:
+                self.competitors.append(values)
+            else:
+                raise("unknown type of value in ListToRank.ranking:\n{self.ranking}")
 
     def describe(self):
         print(f"list: {self.name}\n" \
@@ -84,3 +92,4 @@ class ListToRank:
         f"list of competitors:\n{self.competitors}\n" \
         "ranking:")
         self.printRanking()
+        print(self.ranking)

@@ -105,9 +105,7 @@ class GroupWindow:
         # get the size
         self.canvasHeight = self.frameWithElements.winfo_height()
         self.canvasWidth = self.frameWithElements.winfo_width()
-        print("width of inner frame: {}".format(self.canvasWidth))
-        print("height of inner frame: {}".format(self.canvasHeight))
-
+        
         # resize the scrollable region
         self.canvas.config(scrollregion=(0,0,self.canvasWidth,self.canvasHeight))
     
@@ -123,12 +121,10 @@ class GroupWindow:
             self.nColumnWithElements = int(math.ceil(self.nSlideElements/self.elementPerColumn))
             # build columns
             for i in range(self.nColumnWithElements):
-                print(f"making column {i}")
                 self.frameWithElements.columnconfigure(i)
             self.frameWithElements.columnconfigure(self.nColumnWithElements)
             # build rows
             for i in range(self.elementPerColumn):
-                print(f"making row {i}")
                 self.frameWithElements.rowconfigure(i)
             # assign Elements to grid
             for indexColumn in range(self.nColumnWithElements):
@@ -207,7 +203,7 @@ class GroupWindow:
         
     def validateRanking(self):
         for i in range(self.nSlideElements):
-            self.listToRank.ranking[f"{i}"] = self.slideElements[i].getName()
+            self.listToRank.ranking[f"{i+1}"] = self.slideElements[i].getName()
         self.listToRank.printRanking()
         self.root.quit()
 
