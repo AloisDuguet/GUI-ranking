@@ -5,6 +5,7 @@ from tkinter import font
 from GroupStageManager import *
 from SeasonStageManager import *
 from FinalGroupStageManager import *
+from DirectEliminationStageManager import *
 from ResultWindow import *
 from ChooseListWindow import *
 from ListToRank import *
@@ -36,6 +37,7 @@ class CompetitionManager:
         self.doGroupStage = False
         self.doSeasonStage = False
         self.doFinalGroupStage = False
+        self.doDirectEliminationStage = False
         self.nGroupGroupStage = 3
         self.nGroupSeasonStage = 3
         self.nSeasons = 1
@@ -61,7 +63,8 @@ class CompetitionManager:
             "Multiple season demote/promote stage: competitors are split into n groups of same level according to (potential) previous ranking. " \
             "Each season, you decide which competitors of the group should be promoted to the immediately stronger group, and which competitors should be demoted to the immediately weaker group. " \
             "At the start of the next season, the competitors promoted or demoted are put in the corresponding group.\n" \
-            "Final one-group stage: all competitors are put in the same group, with an initial ranking according to (potential) previous ranking. You will decide the exact ranking of this group.",
+            "Final one-group stage: all competitors are put in the same group, with an initial ranking according to (potential) previous ranking. You will decide the exact ranking of this group." \
+            "Direct elimination stage: each round, each competitor is matched in a 1v1, one is qualified for the next round, the other is eliminated.",
             width=800,
             font=(tk.font.nametofont("TkTextFont").actual()["family"],10))
         explanation.pack()
@@ -103,10 +106,12 @@ class CompetitionManager:
         self.stageProposals.append(ttk.Label(self.frame, text="Do an initial group stage?"))
         self.stageProposals.append(ttk.Label(self.frame, text="Do a multiple season promote/demote stage?"))
         self.stageProposals.append(ttk.Label(self.frame, text="Do a final one-group stage?"))
+        self.stageProposals.append(ttk.Label(self.frame, text="Do a direct elimination stage?"))
         self.buttons = []
         self.buttons.append(ttk.Button(self.frame, text="add stage", command= lambda *args: self.confirmStage(self.buttons[0])))
         self.buttons.append(ttk.Button(self.frame, text="add stage", command= lambda *args: self.confirmStage(self.buttons[1])))
         self.buttons.append(ttk.Button(self.frame, text="add stage", command= lambda *args: self.confirmStage(self.buttons[2])))
+        self.buttons.append(ttk.Button(self.frame, text="add stage", command= lambda *args: self.confirmStage(self.buttons[3])))
         self.frameEntries = []
         self.frameEntries.append(ttk.Frame(self.frame))
         self.frameEntries.append(ttk.Frame(self.frame))
@@ -123,7 +128,7 @@ class CompetitionManager:
 
         # fill in the grid
         # two first columns
-        for i in range(3):
+        for i in range(4):
             self.stageProposals[i].grid(column=0, row=i)
             self.buttons[i].grid(column=1, row=i)
         # third column
@@ -145,7 +150,7 @@ class CompetitionManager:
         self.entries[2].grid(column=1, row=1)
         self.frameEntries[1].grid(column=2, row=1)
         # fourth column
-        self.confirmButton.grid(column=3, row=0, rowspan=3, sticky=tk.N+tk.S+tk.W+tk.E)
+        self.confirmButton.grid(column=3, row=0, rowspan=4, sticky='news')
 
         self.frame.pack(ipadx=5,ipady=5)
 
@@ -175,12 +180,31 @@ class CompetitionManager:
         if buttonNumber == 0:
             self.doGroupStage = True
             self.buttons[0].config(style="Pressed.TButton")
+            # deactivate direct elimination stage
+            self.doDirectEliminationStage = False
+            self.buttons[3].config(style="TButton")
         if buttonNumber == 1:
             self.doSeasonStage = True
             self.buttons[1].config(style="Pressed.TButton")
+            # deactivate direct elimination stage
+            self.doDirectEliminationStage = False
+            self.buttons[3].config(style="TButton")
         if buttonNumber == 2:
             self.doFinalGroupStage = True
             self.buttons[2].config(style="Pressed.TButton")
+            # deactivate direct elimination stage
+            self.doDirectEliminationStage = False
+            self.buttons[3].config(style="TButton")
+        if buttonNumber == 3:
+            self.doDirectEliminationStage = True
+            self.buttons[3].config(style="Pressed.TButton")
+            # deactivate other stages
+            self.doGroupStage = False
+            self.doSeasonStage = False
+            self.doFinalGroupStage = False
+            self.buttons[0].config(style="TButton")
+            self.buttons[1].config(style="TButton")
+            self.buttons[2].config(style="TButton")
     
     def writeRanking(self):
         filename = inputPath("Enter filename to write the ranking", self.root)
@@ -203,6 +227,10 @@ class CompetitionManager:
         if self.doFinalGroupStage:
             # one group to sort everything
             manager = FinalGroupStageManager(self.root,
+                                             self.listToRank)
+            self.listToRank.competitors = manager.manageCompetition()
+        if self.doDirectEliminationStage:
+            manager = DirectEliminationStageManager(self.root,
                                              self.listToRank)
             self.listToRank.competitors = manager.manageCompetition()
         print("Final ranking of the competition:")
