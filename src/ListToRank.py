@@ -64,8 +64,13 @@ class ListToRank:
             # print values of each key in increasing order
             for key in orderedKeys:
                 values = self.ranking[key]
-                for value in values:
-                    print(f"{key}: {value}")
+                if type(values) == list:
+                    for value in values:
+                        print(f"{key}: {value}")
+                elif type(values) == str:
+                    print(f"{key}: {values}")
+                else:
+                    raise("unknown type of value in ListToRank.ranking:\n{self.ranking}")
     
     def fillRankingFromCompetitors(self):
         # fill in ranking from order of self.competitors
