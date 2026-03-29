@@ -73,6 +73,9 @@ class ChooseListWindow:
     def getListToRank(self):
         # get criterion from Text widget
         self.stringCriterion = self.textCriterion.get('1.0', tk.END)
+        if self.stringCriterion[-1] == '\n':
+            self.stringCriterion = self.stringCriterion[0:-1]
+        print(f"stringCriterion found: {self.stringCriterion}")
         # get list from Text widget
         self.stringList = self.text.get('1.0', tk.END)
         rawList = self.stringList.split('\n')
@@ -92,4 +95,7 @@ class ChooseListWindow:
         self.frame.pack()
         self.root.mainloop()
         self.frame.destroy()
-        return ListToRank(self.list, "", self.stringCriterion)
+        if self.stringCriterion != "":
+            return ListToRank(self.list, "", self.stringCriterion)
+        else:
+            return ListToRank(self.list, "")

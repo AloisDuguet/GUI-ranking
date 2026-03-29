@@ -25,7 +25,7 @@ class CompetitionManager:
     def __init__(self, 
                  competitorsList):
         self.root = tk.Tk()
-        self.listToRank = ListToRank(competitorsList, [], [])
+        self.listToRank = ListToRank(competitorsList)
         if competitorsList == []:
             #competitorsList = getListFromFolder(self.root)
             self.chooseListWindow = ChooseListWindow(self.root)
