@@ -14,46 +14,6 @@ class DirectEliminationStageManager:
         # random initiation
         numpy.random.shuffle(self.modifiedFIFO)
 
-        # initialize rankings: 
-        # a dictionary with key a ranking or range of ranking ('5-8') and value the set of competitors with this ranking
-        self.rankings = dict()
-
-    def orderRankingKeys(self):
-        # get all keys
-        keys = self.rankings.keys()
-        # order keys in increasing order
-        tempDict = dict()
-        listKeys = []
-        for key in keys:
-            parsedKey = int(key.split('-')[0])
-            tempDict[parsedKey] = key
-            listKeys.append(parsedKey)
-        listKeys.sort()
-        orderedKeys = []
-        for key in listKeys:
-            orderedKeys.append(tempDict[key])
-        return orderedKeys
-
-    def showRankings(self):
-        orderedKeys = self.orderRankingKeys()
-        # print values of each key in increasing order
-        for key in orderedKeys:
-            values = self.rankings[key]
-            if len(values) == 1:
-                print("{}: {}".format(key, values))
-            else:
-                for value in values:
-                    print("{}: {}".format(key, value))
-    
-    def produceRankingList(self):
-        orderedKeys = self.orderRankingKeys()
-        # print values of each key in increasing order of the key
-        self.finalRanking = []
-        for key in orderedKeys:
-            values = self.rankings[key]
-            self.finalRanking.extend(values)
-        return self.finalRanking
-    
     def getTitleWindow(self, matchNumber):
         if self.numberQualified == 1:
             return f"Direct elimination stage: final"
@@ -70,7 +30,8 @@ class DirectEliminationStageManager:
         winner,loser = window.classify()
         print(f"{winner} won against {loser}")
         self.modifiedFIFO.append(winner)
-        self.rankings[key].append(loser)
+        self.listToRank.ranking[key].append(loser)
+        print(f"{loser} should be added with rank {key}")
 
     def manageOneRound(self):
         # compute number of matches so that 
@@ -84,13 +45,8 @@ class DirectEliminationStageManager:
         
         self.numberOfMatches = numberRemaining - self.numberQualified
         numberWithFreePass = numberRemaining - 2*self.numberOfMatches
-        key = ""
-        if self.numberQualified+1 < numberRemaining:
-            key = "{}-{}".format(self.numberQualified+1,numberRemaining)
-            self.rankings[key] = []
-        else:
-            key = "{}".format(numberRemaining)
-            self.rankings[key] = []
+        key = self.listToRank.produceKey(self.numberQualified+1,numberRemaining)
+        self.listToRank.ranking[key] = []
         for i in range(self.numberOfMatches):
             self.manageOneMatch(key, i)
         # show free passes for logs
@@ -105,11 +61,15 @@ class DirectEliminationStageManager:
         while len(self.modifiedFIFO) > 1:
             self.manageOneRound()
             print(f"remaining competitor after round: {self.modifiedFIFO}")
+            print(f"current ranking: {self.listToRank.ranking}")
 
         # when only one competitor is in self.modifiedFIFO:
-        self.rankings['1'] = [self.modifiedFIFO.pop(0)]
+        self.listToRank.ranking['1'] = [self.modifiedFIFO.pop(0)]
         
         # show ranking or range of ranking for everyone 
-        # via self.rankings
-        self.showRankings()
-        return self.produceRankingList()
+        # via self.listToRank
+        self.listToRank.printRanking()
+        self.listToRank.fillCompetitorsFromRanking()
+        print("list to rank at the end of direct elimination stage:")
+        self.listToRank.describe()
+        return self.listToRank

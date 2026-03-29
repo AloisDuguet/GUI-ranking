@@ -23,7 +23,7 @@ class ResultWindow:
 
         # fill in competitors with corresponding ranking
         self.elements = []
-        self.rankings = []
+        self.ranking = []
         for i in range(len(self.listToRank.competitors)):
             print("inserting one competitor at rank {} in line {}".format(i+1,i+1))
             self.text.insert(index='{}.0'.format(i+1),

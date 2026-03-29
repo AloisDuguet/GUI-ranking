@@ -232,7 +232,7 @@ class CompetitionManager:
         if self.doDirectEliminationStage:
             manager = DirectEliminationStageManager(self.root,
                                              self.listToRank)
-            self.listToRank.competitors = manager.manageCompetition()
+            self.listToRank = manager.manageCompetition()
         print("Final ranking of the competition:")
         GroupStageManager.printParticipants(self, with_ranking=True)
         manager = ResultWindow(self.root, self.listToRank)
